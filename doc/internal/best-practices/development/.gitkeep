@@ -1,0 +1,23 @@
+# Development Practices
+
+Research-backed best practices for software development processes and practices.
+
+## Topics
+
+Documents in this directory will cover:
+- Testing strategies
+- Code review practices
+- CI/CD pipelines
+- Git workflows
+- API versioning
+- Documentation practices
+- Refactoring strategies
+- Technical debt management
+- Code quality metrics
+- Development environments
+
+## Status
+
+No documents yet. Topics will be researched and added as needed.
+
+See [BEST-PRACTICES-GUIDE.md](../../BEST-PRACTICES-GUIDE.md) for methodology and priorities.

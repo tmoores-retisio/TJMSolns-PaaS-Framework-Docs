@@ -1,0 +1,22 @@
+# Security & Compliance Best Practices
+
+Research-backed best practices for security, compliance, and data protection.
+
+## Topics
+
+Documents in this directory will cover:
+- Container security hardening
+- PCI-DSS compliance
+- GDPR data protection
+- Authentication and authorization
+- Secret management
+- Vulnerability scanning
+- Security incident response
+- Encryption strategies
+- Access control patterns
+
+## Status
+
+No documents yet. Topics will be researched and added as needed.
+
+See [BEST-PRACTICES-GUIDE.md](../../BEST-PRACTICES-GUIDE.md) for methodology and priorities.

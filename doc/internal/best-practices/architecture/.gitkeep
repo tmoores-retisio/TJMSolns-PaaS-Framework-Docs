@@ -1,0 +1,21 @@
+# Architecture Best Practices
+
+Research-backed best practices for architectural patterns and decisions.
+
+## Topics
+
+Documents in this directory will cover:
+- CQRS implementation patterns
+- Event sourcing at scale
+- Actor model supervision strategies
+- Microservices decomposition principles
+- API design patterns
+- Service boundaries and coupling
+- Data consistency patterns
+- Distributed systems patterns
+
+## Status
+
+No documents yet. Topics will be researched and added as needed.
+
+See [BEST-PRACTICES-GUIDE.md](../../BEST-PRACTICES-GUIDE.md) for methodology and priorities.
