@@ -479,6 +479,20 @@ This decision is validated by comprehensive industry research:
 
 **Key Validation**: Actor model enables 99.999% uptime and 50M+ msg/sec throughput in production at companies processing billions of transactions. Pekko recommended for licensing freedom while maintaining production-proven capabilities.
 
+## Related Features
+
+**Features That Validate This Decision**:
+
+*To be documented in Phase 1 (Governance Inference Analysis)*
+
+Expected features using actor model:
+- **Stateful Entities**: Shopping cart, order, user session, payment transaction actors
+- **Message Protocols**: Type-safe command/event/query messages with pattern matching
+- **Supervision**: Documented supervision strategies (restart, stop, escalate)
+- **Concurrency**: Actor-based concurrency without locks or shared mutable state
+
+**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#adr-0006-agent-based-service-patterns-actor-model)
+
 ## References
 
 - [Akka Documentation](https://doc.akka.io/)

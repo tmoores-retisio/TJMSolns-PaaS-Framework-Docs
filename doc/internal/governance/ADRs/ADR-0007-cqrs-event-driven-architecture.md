@@ -457,6 +457,25 @@ This decision is validated by comprehensive industry research:
 
 **Key Validation**: CQRS enables 60% infrastructure cost reduction (ING Bank) and 10-100x read throughput improvements. Event-driven architecture delivers 50-70% cost efficiency at trillion-event-per-day scale (Netflix, Uber). Combined patterns critical for scalable e-commerce systems.
 
+## Related Features
+
+**Features That Validate This Decision**:
+
+*To be documented in Phase 1 (Governance Inference Analysis)*
+
+Expected features demonstrating CQRS/Event-Driven patterns:
+
+**CQRS Maturity Levels**:
+- **Level 2 (Standard CQRS)**: Shopping cart, product catalog, user profiles - separate read/write models without event sourcing
+- **Level 3 (Full CQRS/ES)**: Orders, payments, inventory - event sourcing for complete audit trail
+
+**Event-Driven Integration**:
+- Features publishing domain events (CartCheckedOut, OrderPlaced, PaymentProcessed)
+- Features consuming events from other services (inventory updates, order notifications)
+- Saga patterns for distributed transactions (checkout, fulfillment)
+
+**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#adr-0007-cqrs-and-event-driven-architecture)
+
 ## References
 
 - [CQRS Pattern - Martin Fowler](https://martinfowler.com/bliki/CQRS.html)

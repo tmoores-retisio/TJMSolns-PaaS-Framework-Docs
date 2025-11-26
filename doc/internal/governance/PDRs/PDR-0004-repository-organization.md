@@ -483,6 +483,19 @@ Metrics:
 - Future ADR: Shared library strategy (when needed)
 - Future PDR: CI/CD pipeline standards
 
+## Related Features
+
+**Features That Validate This Decision**:
+
+*To be documented in Phase 1 (Governance Inference Analysis)*
+
+Expected features:
+- All service features should be self-contained within service repositories
+- Features should not have hard code dependencies across services (only API/message integration)
+- Multi-repo structure enables independent feature deployment
+
+**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#pdr-0004-repository-organization-strategy)
+
 ## References
 
 - [Microservices - Martin Fowler](https://martinfowler.com/articles/microservices.html)

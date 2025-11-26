@@ -413,6 +413,20 @@ Metrics:
 - [PDR-0005: Framework Selection Policy](./PDR-0005-framework-selection-policy.md) - Canvas documents framework choices
 - Future PDR: Code review standards (include canvas review)
 
+## Related Features
+
+**Features That Validate This Decision**:
+
+*To be documented in Phase 2 (Core Service Features)*
+
+Expected features:
+- All service features should be listed in SERVICE-CANVAS.md Features section
+- Canvas should provide quick status overview of all features (🟢/🟡/🔴)
+- Canvas should link to detailed feature documentation
+- Features section validates canvas is living document
+
+**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#pdr-0006-service-canvas-documentation-standard)
+
 ## References
 
 - [Business Model Canvas](https://www.strategyzer.com/canvas/business-model-canvas)

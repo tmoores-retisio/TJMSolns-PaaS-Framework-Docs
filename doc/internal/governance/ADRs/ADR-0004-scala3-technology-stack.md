@@ -392,6 +392,19 @@ This decision is validated by comprehensive industry research:
 
 **Key Validation**: All three pillars of this technology stack decision (Scala 3, Functional Programming, Mill) are validated by industry evidence showing 2-3x compilation speed improvements, 40-60% fewer defects, and significant maintainability gains in production environments at scale.
 
+## Related Features
+
+**Features That Validate This Decision**:
+
+*To be documented in Phase 1 (Governance Inference Analysis)*
+
+Expected features:
+- All service features should use Scala 3 with functional programming patterns
+- Features should demonstrate immutability, pure functions, and effect systems (ZIO/Cats Effect)
+- Mill build integration across all services
+
+**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#adr-0004-scala-3-technology-stack)
+
 ## References
 
 - [Scala 3 Documentation](https://docs.scala-lang.org/scala3/)

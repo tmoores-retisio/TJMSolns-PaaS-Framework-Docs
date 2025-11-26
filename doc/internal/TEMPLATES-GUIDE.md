@@ -39,8 +39,11 @@
 | Template | Location | Purpose | Status |
 |----------|----------|---------|--------|
 | [SERVICE-CANVAS.md](governance/templates/SERVICE-CANVAS.md) | `doc/internal/governance/templates/` | Service canvas for all TJMPaaS services | Active Template |
+| [FEATURE-TEMPLATE.md](governance/templates/FEATURE-TEMPLATE.md) | `doc/internal/governance/templates/` | Feature documentation for all TJMPaaS features | Active Template |
 
-**Usage**: Template copied to service repository root when creating new service. Service-specific canvas lives in service repo, not governance repo.
+**Usage**: 
+- SERVICE-CANVAS.md copied to service repository root when creating new service
+- FEATURE-TEMPLATE.md copied to service `features/` directory for per-feature documentation
 
 **Governance**: [PDR-0006: Service Canvas Documentation Standard](governance/PDRs/PDR-0006-service-canvas-standard.md)
 
@@ -123,6 +126,25 @@ All templates include status frontmatter:
 4. **Service canvas lives in service repo** (not governance repo)
 
 5. **Governance**: [PDR-0006](governance/PDRs/PDR-0006-service-canvas-standard.md)
+
+### For Feature Documentation
+
+1. **Template location**: `doc/internal/governance/templates/FEATURE-TEMPLATE.md`
+
+2. **When creating new feature**:
+   ```bash
+   # In service repository features/ directory
+   cp /path/to/TJMPaaS/doc/internal/governance/templates/FEATURE-TEMPLATE.md \
+      ./features/<feature-name>.md
+   ```
+
+3. **Create Gherkin file**: `features/<feature-name>.feature` (BDD scenarios)
+
+4. **Fill in feature-specific details** following template structure
+
+5. **Update SERVICE-CANVAS.md** with feature entry in Features section
+
+6. **Governance**: [PDR-0008](governance/PDRs/PDR-0008-feature-documentation-standard.md)
 
 ### For Best Practices Research
 

@@ -314,6 +314,20 @@ This decision is validated by comprehensive industry research:
 
 **Key Validation**: Reactive Manifesto principles enable 10-100x throughput improvements and 40-60% cost reductions in production at scale. Event-driven patterns complement reactive principles for service integration.
 
+## Related Features
+
+**Features That Validate This Decision**:
+
+*To be documented in Phase 1 (Governance Inference Analysis)*
+
+Expected features demonstrating reactive principles:
+- **Responsive**: Features with < 200ms p95 response time SLAs
+- **Resilient**: Features with circuit breakers, supervision, graceful degradation
+- **Elastic**: Features that scale horizontally without code changes
+- **Message-Driven**: Features using actors, event streams, non-blocking I/O
+
+**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#adr-0005-reactive-manifesto-alignment)
+
 ## References
 
 - [Reactive Manifesto](https://www.reactivemanifesto.org/)
