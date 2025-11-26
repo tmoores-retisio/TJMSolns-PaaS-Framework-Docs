@@ -272,22 +272,132 @@ case class ItemRemoved(itemId: String) extends CartEvent
 
 ### Sequence Diagrams
 
+#### Happy Path Flow
+
 ```mermaid
 sequenceDiagram
     participant Customer
-    participant CartService
-    participant CartActor
-    participant Inventory
-    participant Database
+    participant API as CartService API
+    participant Actor as CartActor
+    participant Inventory as InventoryService
+    participant DB as Event Store
+    participant Queue as Kafka
 
-    Customer->>CartService: POST /carts/{id}/items
-    CartService->>CartActor: AddItem(productId, qty)
-    CartActor->>Inventory: CheckAvailability(productId)
-    Inventory-->>CartActor: Available(qty)
-    CartActor->>Database: Persist(ItemAdded event)
-    Database-->>CartActor: Success
-    CartActor-->>CartService: ItemAdded(itemId)
-    CartService-->>Customer: 201 Created + HATEOAS links
+    Customer->>API: POST /carts/{id}/items
+    Note over API: Extract auth token<br/>Validate request
+    API->>Actor: AddItem(productId, qty, replyTo)
+    
+    Actor->>Inventory: CheckAvailability(productId, qty)
+    Inventory-->>Actor: Available(qty=5)
+    
+    Note over Actor: Validate business rules<br/>Calculate totals
+    
+    Actor->>DB: Persist(ItemAdded event)
+    DB-->>Actor: Event persisted
+    
+    Note over Actor: Apply event to state<br/>Update cart total
+    
+    Actor->>Queue: Publish(ItemAddedToCart)
+    Actor-->>API: ItemAdded(itemId, cartTotal)
+    
+    API-->>Customer: 201 Created<br/>Location: /items/{itemId}<br/>HATEOAS links
+```
+
+#### Error Handling Flow
+
+```mermaid
+sequenceDiagram
+    participant Customer
+    participant API as CartService API
+    participant Actor as CartActor
+    participant Inventory as InventoryService
+    participant CB as Circuit Breaker
+
+    Customer->>API: POST /carts/{id}/items
+    API->>Actor: AddItem(productId, qty, replyTo)
+    
+    Actor->>CB: Check circuit state
+    CB-->>Actor: CLOSED (OK to call)
+    
+    Actor->>Inventory: CheckAvailability(productId, qty)
+    
+    alt Inventory Available
+        Inventory-->>Actor: Available(qty)
+        Note over Actor: Proceed with add
+    else Insufficient Inventory
+        Inventory-->>Actor: InsufficientStock(available=1)
+        Actor-->>API: ItemNotAdded(reason)
+        API-->>Customer: 400 Bad Request<br/>Error: INSUFFICIENT_INVENTORY
+    else Inventory Timeout
+        Note over Inventory: No response<br/>Network issue
+        Actor-->>CB: Record failure
+        CB-->>Actor: Circuit OPEN
+        Actor-->>API: ServiceUnavailable
+        API-->>Customer: 503 Service Unavailable<br/>Retry-After: 30s
+    else Circuit Open
+        CB-->>Actor: Circuit OPEN
+        Actor-->>API: ServiceUnavailable
+        API-->>Customer: 503 Service Unavailable<br/>Degraded mode
+    end
+```
+
+#### Event Publishing Flow
+
+```mermaid
+sequenceDiagram
+    participant Actor as CartActor
+    participant ES as Event Store
+    participant Kafka
+    participant Order as OrderService
+    participant Analytics
+
+    Note over Actor: State change occurs<br/>(item added, checkout, etc.)
+    
+    Actor->>ES: Persist(DomainEvent)
+    ES-->>Actor: Persisted (offset: 123)
+    
+    Note over Actor: Event persisted<br/>State updated
+    
+    Actor->>Kafka: Publish(IntegrationEvent)<br/>Topic: cart-events
+    
+    Note over Kafka: Durable message queue<br/>At-least-once delivery
+    
+    Kafka-->>Order: Consume(CartCheckedOut)
+    Note over Order: Create order from cart
+    
+    Kafka-->>Analytics: Consume(ItemAddedToCart)
+    Note over Analytics: Update metrics dashboard
+    
+    Actor-->>Actor: Continue processing<br/>(non-blocking publish)
+```
+
+#### Actor Supervision Flow
+
+```mermaid
+stateDiagram-v2
+    [*] --> Running: Actor started
+    
+    Running --> Processing: Receive AddItem
+    Processing --> Validating: Check business rules
+    
+    Validating --> Persisting: Rules OK
+    Validating --> Responding: Validation failed
+    
+    Persisting --> Failed: Persistence error
+    Persisting --> Updated: Event persisted
+    
+    Updated --> Responding: Apply event
+    Responding --> Running: Send response
+    
+    Failed --> Restarting: Supervisor restart
+    Restarting --> Recovering: Replay events
+    Recovering --> Running: State recovered
+    
+    Failed --> Stopped: Max retries exceeded
+    Stopped --> [*]
+    
+    Running --> Passivated: Idle timeout
+    Passivated --> Running: New message
 ```
 
 **Additional Diagrams**:

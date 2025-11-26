@@ -22,6 +22,92 @@ This document tracks the **bidirectional inference relationship** between govern
 - ✅ **Onboarding**: New developers see "how we apply decisions in real code"
 - ✅ **Compliance**: Complete chain from decision → feature → code → test
 
+### Bidirectional Inference Architecture
+
+The following diagram shows how governance and features relate bidirectionally:
+
+```mermaid
+graph TB
+    subgraph "Governance Layer"
+        ADRs[ADRs<br/>Architecture Decisions]
+        PDRs[PDRs<br/>Process Decisions]
+        POLs[POLs<br/>Policies]
+    end
+    
+    subgraph "Inference Engine"
+        G2F[Governance → Features<br/>What validates this decision?]
+        F2G[Features → Governance<br/>What decisions does this require?]
+        GAP[Gap Analysis<br/>Orphaned/Ungoverned/Missing]
+    end
+    
+    subgraph "Feature Layer"
+        Cart[CartService Features]
+        Order[OrderService Features]
+        Payment[PaymentService Features]
+        Product[ProductService Features]
+    end
+    
+    ADRs -->|Infer Required Features| G2F
+    PDRs -->|Infer Required Features| G2F
+    POLs -->|Infer Required Features| G2F
+    
+    G2F -->|Validate| Cart
+    G2F -->|Validate| Order
+    G2F -->|Validate| Payment
+    G2F -->|Validate| Product
+    
+    Cart -->|Reference Decisions| F2G
+    Order -->|Reference Decisions| F2G
+    Payment -->|Reference Decisions| F2G
+    Product -->|Reference Decisions| F2G
+    
+    F2G -->|Validate Usage| ADRs
+    F2G -->|Validate Usage| PDRs
+    F2G -->|Validate Usage| POLs
+    
+    G2F <-->|Detect Gaps| GAP
+    F2G <-->|Detect Gaps| GAP
+    
+    GAP -->|Missing ADR| ADRs
+    GAP -->|Missing Feature| Cart
+    GAP -->|Missing Feature| Order
+    
+    style GAP fill:#f9f,stroke:#333,stroke-width:3px
+    style G2F fill:#bbf,stroke:#333,stroke-width:2px
+    style F2G fill:#bfb,stroke:#333,stroke-width:2px
+```
+
+### Gap Analysis Types
+
+Four types of gaps can be detected through bidirectional inference:
+
+```mermaid
+graph LR
+    subgraph "Gap Types"
+        OG[Orphaned Governance<br/>Decisions without features<br/>❓ Premature or missing features?]
+        UF[Ungoverned Features<br/>Features without decisions<br/>❓ Missing ADR or incorrect refs?]
+        MG[Missing Governance<br/>Patterns need decisions<br/>❓ Create ADR for pattern?]
+        MF[Missing Features<br/>Decisions need validation<br/>❓ Implement feature?]
+    end
+    
+    OG -->|Phase 1| Analysis1[Analyze each ADR/PDR/POL]
+    Analysis1 -->|0 features?| OG
+    
+    UF -->|Phase 3| Analysis2[Analyze features]
+    Analysis2 -->|0 ADR refs?| UF
+    
+    MG -->|Phase 3| Analysis3[Scan feature patterns]
+    Analysis3 -->|No ADR exists?| MG
+    
+    MF -->|Phase 1| Analysis4[Analyze governance]
+    Analysis4 -->|No feature exists?| MF
+    
+    style OG fill:#fbb,stroke:#333,stroke-width:2px
+    style UF fill:#fbb,stroke:#333,stroke-width:2px
+    style MG fill:#ffb,stroke:#333,stroke-width:2px
+    style MF fill:#ffb,stroke:#333,stroke-width:2px
+```
+
 ---
 
 ## Governance → Features (What Features Validate This Decision?)
@@ -578,6 +664,86 @@ This document tracks the **bidirectional inference relationship** between govern
 ---
 
 ## Validation Process
+
+The following diagram shows the 7-phase validation process for maintaining governance-feature alignment:
+
+```mermaid
+flowchart TD
+    Start([Start: Framework Adoption]) --> P0[Phase 0: Foundation<br/>Create Templates & Inference Map]
+    
+    P0 --> P1[Phase 1: Governance Inference<br/>Analyze ADRs/PDRs/POLs]
+    
+    P1 --> Analyze1{All Governance<br/>Analyzed?}
+    Analyze1 -->|No| ReadADR[Read Next ADR/PDR/POL]
+    ReadADR --> InferFeatures[Infer Required Features]
+    InferFeatures --> DocFeatures[Document in Governance→Features]
+    DocFeatures --> CheckOrphaned{Has Expected<br/>Features?}
+    CheckOrphaned -->|No| FlagOrphaned[Flag Orphaned Governance]
+    CheckOrphaned -->|Yes| Analyze1
+    FlagOrphaned --> Analyze1
+    
+    Analyze1 -->|Yes| P2[Phase 2: Core Service Features<br/>Document 5 CartService Features]
+    
+    P2 --> DocLoop{All Features<br/>Documented?}
+    DocLoop -->|No| CreateFeature[Create Feature .md + .feature]
+    CreateFeature --> RefGov[Reference Applicable ADRs/PDRs/POLs]
+    RefGov --> UpdateF2G[Update Features→Governance Section]
+    UpdateF2G --> DocLoop
+    
+    DocLoop -->|Yes| P3[Phase 3: Gap Analysis<br/>Identify Missing Governance & Features]
+    
+    P3 --> ScanPatterns[Scan Features for Patterns]
+    ScanPatterns --> CheckADR{Pattern Has<br/>ADR?}
+    CheckADR -->|No| InferMissingGov[Infer Missing Governance]
+    CheckADR -->|Yes| CheckRefs{Feature Refs<br/>ADR?}
+    CheckRefs -->|No| FlagUngoverned[Flag Ungoverned Feature]
+    CheckRefs -->|Yes| ScanGov[Scan Governance for Implied Features]
+    FlagUngoverned --> ScanGov
+    InferMissingGov --> ScanGov
+    
+    ScanGov --> CheckFeature{Feature<br/>Exists?}
+    CheckFeature -->|No| InferMissingFeature[Infer Missing Feature]
+    CheckFeature -->|Yes| GenReport[Generate Gap Analysis Report]
+    InferMissingFeature --> GenReport
+    
+    GenReport --> P4[Phase 4: Create Missing Governance<br/>ADRs for Discovered Patterns]
+    
+    P4 --> P5[Phase 5: Second Service Validation<br/>OrderService Features]
+    
+    P5 --> P6[Phase 6: Automation<br/>Scripts and Tooling]
+    
+    P6 --> P7[Phase 7: Quarterly Validation<br/>Maintain Accuracy]
+    
+    P7 --> Review{Quarterly<br/>Review?}
+    Review -->|Every Quarter| ValidateLinks[Validate All Links]
+    ValidateLinks --> UpdateMetrics[Update Metrics Dashboard]
+    UpdateMetrics --> NewGaps{New Gaps<br/>Identified?}
+    NewGaps -->|Yes| P3
+    NewGaps -->|No| Review
+    
+    Review -->|New Features| P2
+    Review -->|New Governance| P1
+    
+    style P0 fill:#bfb,stroke:#333,stroke-width:2px
+    style P1 fill:#bfb,stroke:#333,stroke-width:2px
+    style P2 fill:#bbf,stroke:#333,stroke-width:2px
+    style P3 fill:#fbf,stroke:#333,stroke-width:2px
+    style P4 fill:#ffb,stroke:#333,stroke-width:2px
+    style P5 fill:#bbf,stroke:#333,stroke-width:2px
+    style P6 fill:#fbb,stroke:#333,stroke-width:2px
+    style P7 fill:#bff,stroke:#333,stroke-width:2px
+    style FlagOrphaned fill:#f99,stroke:#333,stroke-width:2px
+    style FlagUngoverned fill:#f99,stroke:#333,stroke-width:2px
+    style InferMissingGov fill:#ff9,stroke:#333,stroke-width:2px
+    style InferMissingFeature fill:#ff9,stroke:#333,stroke-width:2px
+```
+
+**Phase Status** (as of 2025-11-26):
+- ✅ **Phase 0**: Foundation complete (PDR-0008, templates, this inference map)
+- ✅ **Phase 1**: Governance inference complete (9/9 governance analyzed, ~35 features inferred, 0 orphans)
+- ⏳ **Phase 2-7**: Deferred until actual service repositories created
+
+---
 
 ### Phase 1: Governance Inference Analysis (Week 1) ✅ COMPLETE
 

@@ -275,6 +275,192 @@ object ShoppingCart {
 - Cats Effect as alternative
 - See PDR-0005 for framework selection guidelines
 
+### CQRS Pattern Architecture
+
+The following diagrams illustrate CQRS implementation patterns in TJMPaaS:
+
+#### CQRS Maturity Levels
+
+```mermaid
+graph TB
+    subgraph "Level 1 - Simple CQRS"
+        L1C[Commands<br/>Separate Methods] --> L1DB[(Single Database<br/>Same Model)]
+        L1Q[Queries<br/>Separate Methods] --> L1DB
+        L1DB -.->|Same data model| L1DB
+    end
+    
+    subgraph "Level 2 - Standard CQRS ⭐ TJMPaaS Default"
+        L2C[Commands<br/>Write Model] --> L2WDB[(Write DB<br/>PostgreSQL)]
+        L2WDB -->|Events| L2Proj[Projection]
+        L2Proj --> L2RDB[(Read DB<br/>Optimized Views)]
+        L2Q[Queries<br/>Read Model] --> L2RDB
+    end
+    
+    subgraph "Level 3 - Full CQRS/ES ⭐ Audit-Critical"
+        L3C[Commands<br/>Aggregate] --> L3ES[(Event Store<br/>Immutable Log)]
+        L3ES -->|Event Stream| L3Proj[Multiple Projections]
+        L3Proj --> L3DB1[(Read DB 1<br/>SQL)]
+        L3Proj --> L3DB2[(Read DB 2<br/>NoSQL)]
+        L3Proj --> L3DB3[(Search<br/>Elasticsearch)]
+        L3Q[Queries<br/>Optimized Models] --> L3DB1
+        L3Q --> L3DB2
+        L3Q --> L3DB3
+    end
+    
+    style "Level 2 - Standard CQRS ⭐ TJMPaaS Default" fill:#bfb,stroke:#333,stroke-width:3px
+    style "Level 3 - Full CQRS/ES ⭐ Audit-Critical" fill:#bbf,stroke:#333,stroke-width:3px
+```
+
+#### Command and Query Flow
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant CmdAPI as Command API
+    participant Actor as Aggregate Actor
+    participant EventStore as Event Store
+    participant Projection
+    participant QueryDB as Query DB
+    participant QueryAPI as Query API
+
+    Note over Client,QueryAPI: Command Side (Write Path)
+    
+    Client->>CmdAPI: POST /cart/items<br/>(Add Item)
+    CmdAPI->>Actor: AddItem Command
+    
+    Note over Actor: Validate business rules<br/>Check invariants
+    
+    Actor->>EventStore: Persist<br/>ItemAdded Event
+    EventStore-->>Actor: Event stored
+    
+    Note over Actor: Apply event<br/>Update in-memory state
+    
+    Actor-->>CmdAPI: Success
+    CmdAPI-->>Client: 202 Accepted
+
+    Note over Client,QueryAPI: Query Side (Read Path)
+    
+    EventStore-->>Projection: Event stream<br/>ItemAdded
+    
+    Note over Projection: Transform event<br/>Build read model
+    
+    Projection->>QueryDB: Update view<br/>Denormalized cart data
+    
+    Client->>QueryAPI: GET /cart<br/>(Query Cart)
+    QueryAPI->>QueryDB: Read view
+    QueryDB-->>QueryAPI: Cart data
+    QueryAPI-->>Client: 200 OK + Data
+    
+    Note over Client,QueryAPI: Eventually consistent<br/>Typical lag: < 1 second
+```
+
+#### Event Sourcing Pattern
+
+```mermaid
+graph LR
+    subgraph "Command Processing"
+        Cmd[Command] --> Agg[Aggregate]
+        Agg -->|Validate| Rules{Business<br/>Rules?}
+        Rules -->|Pass| GenEvent[Generate<br/>Event]
+        Rules -->|Fail| Reject[Reject<br/>Command]
+    end
+    
+    subgraph "Event Store"
+        GenEvent --> ES[(Event Log<br/>Immutable)]
+        ES -->|Append-only| ES
+    end
+    
+    subgraph "State Reconstruction"
+        ES -->|Replay Events| Rebuild[Rebuild State]
+        Rebuild -->|Fold Events| State[Current State]
+    end
+    
+    subgraph "Projections"
+        ES -->|Event Stream| P1[Projection 1<br/>Shopping Cart View]
+        ES -->|Event Stream| P2[Projection 2<br/>Order History]
+        ES -->|Event Stream| P3[Projection 3<br/>Analytics]
+    end
+    
+    State -.->|In-Memory| Agg
+    
+    style ES fill:#bfb,stroke:#333,stroke-width:2px
+    style State fill:#bbf,stroke:#333,stroke-width:2px
+```
+
+### Event-Driven Integration Architecture
+
+#### Service Integration via Events
+
+```mermaid
+graph TB
+    subgraph "CartService"
+        Cart[Cart Aggregate] -->|Emit| CE[CartCheckedOut<br/>Event]
+    end
+    
+    subgraph "Event Bus - Kafka"
+        CE --> Topic1[cart-events Topic]
+        Topic1 -->|At-least-once| Consumers
+    end
+    
+    subgraph "Consumer Services"
+        Consumers --> Order[OrderService<br/>Create Order]
+        Consumers --> Inventory[InventoryService<br/>Reserve Items]
+        Consumers --> Analytics[AnalyticsService<br/>Track Metrics]
+        Consumers --> Notification[NotificationService<br/>Send Email]
+    end
+    
+    Order -->|Emit| OE[OrderPlaced<br/>Event]
+    OE --> Topic2[order-events Topic]
+    
+    Topic2 --> Payment[PaymentService<br/>Process Payment]
+    Topic2 --> Fulfillment[FulfillmentService<br/>Ship Order]
+    
+    style Topic1 fill:#ffb,stroke:#333,stroke-width:2px
+    style Topic2 fill:#ffb,stroke:#333,stroke-width:2px
+```
+
+#### Saga Pattern (Distributed Transaction)
+
+```mermaid
+sequenceDiagram
+    participant Saga as Checkout Saga
+    participant Cart as CartService
+    participant Order as OrderService
+    participant Payment as PaymentService
+    participant Inventory as InventoryService
+    
+    Note over Saga: Orchestrator pattern
+
+    Saga->>Cart: Checkout cart
+    Cart-->>Saga: Success (CartCheckedOut)
+    
+    Saga->>Order: Create order
+    Order-->>Saga: Success (OrderCreated)
+    
+    Saga->>Inventory: Reserve items
+    
+    alt Inventory Available
+        Inventory-->>Saga: Success (ItemsReserved)
+        Saga->>Payment: Process payment
+        
+        alt Payment Successful
+            Payment-->>Saga: Success (PaymentCompleted)
+            Note over Saga: Saga complete!
+        else Payment Failed
+            Payment-->>Saga: Failure
+            Note over Saga: Compensate!
+            Saga->>Inventory: Release reservation
+            Saga->>Order: Cancel order
+            Saga->>Cart: Restore cart
+        end
+    else Inventory Insufficient
+        Inventory-->>Saga: Failure
+        Note over Saga: Compensate!
+        Saga->>Order: Cancel order
+        Saga->>Cart: Restore cart
+    end
+```
+
 ### CQRS Pattern Implementation
 
 **Command Side**:

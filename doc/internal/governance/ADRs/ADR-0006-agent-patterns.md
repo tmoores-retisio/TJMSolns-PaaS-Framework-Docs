@@ -297,6 +297,199 @@ Alternatives like `Ref`, `Queue`, `Semaphore` from effect systems are powerful b
 - **ZIO Actors** for ZIO-centric services
 - See [PDR-0005: Framework Selection Policy](../PDRs/PDR-0005-framework-selection-policy.md) for framework selection guidelines
 
+### Actor Model Architecture
+
+The following diagrams illustrate actor model patterns in TJMPaaS:
+
+#### Actor Hierarchy and Message Flow
+
+```mermaid
+graph TB
+    subgraph "Supervisor Layer"
+        Root[Root Guardian<br/>System-Level Supervisor]
+        CartSup[CartService Supervisor<br/>Manages Cart Actors]
+        SessionSup[Session Supervisor<br/>Manages Session Actors]
+    end
+    
+    subgraph "Entity Actors"
+        Cart1[Cart Actor<br/>cart-123]
+        Cart2[Cart Actor<br/>cart-456]
+        Cart3[Cart Actor<br/>cart-789]
+        Session1[Session Actor<br/>session-abc]
+        Session2[Session Actor<br/>session-def]
+    end
+    
+    subgraph "Message Flow"
+        Client[Client/API] -->|AddItem| Cart1
+        Cart1 -->|ItemAdded Event| EventStore[(Event Store)]
+        Cart1 -->|Publish| Kafka[Kafka]
+        Cart1 -->|Response| Client
+    end
+    
+    Root --> CartSup
+    Root --> SessionSup
+    CartSup -->|Creates/Supervises| Cart1
+    CartSup -->|Creates/Supervises| Cart2
+    CartSup -->|Creates/Supervises| Cart3
+    SessionSup -->|Creates/Supervises| Session1
+    SessionSup -->|Creates/Supervises| Session2
+    
+    Cart1 -.->|Failure| CartSup
+    CartSup -.->|Restart Strategy| Cart1
+    
+    style Root fill:#f99,stroke:#333,stroke-width:3px
+    style CartSup fill:#fb9,stroke:#333,stroke-width:2px
+    style SessionSup fill:#fb9,stroke:#333,stroke-width:2px
+    style Cart1 fill:#bfb,stroke:#333,stroke-width:2px
+    style Cart2 fill:#bfb,stroke:#333,stroke-width:2px
+    style Cart3 fill:#bfb,stroke:#333,stroke-width:2px
+```
+
+#### Supervision Strategies
+
+```mermaid
+graph TB
+    subgraph "OneForOne Strategy"
+        S1[Supervisor] --> C1[Child 1]
+        S1 --> C2[Child 2]
+        S1 --> C3[Child 3]
+        C2 -.->|Fails| S1
+        S1 -.->|Restart Only Child 2| C2
+        Note1[Use: Independent entities<br/>Example: Cart actors]
+    end
+    
+    subgraph "AllForOne Strategy"
+        S2[Supervisor] --> G1[Child A]
+        S2 --> G2[Child B]
+        S2 --> G3[Child C]
+        G2 -.->|Fails| S2
+        S2 -.->|Restart All Children| G1
+        S2 -.->|Restart All Children| G2
+        S2 -.->|Restart All Children| G3
+        Note2[Use: Tightly coupled<br/>Example: Service components]
+    end
+    
+    subgraph "Escalate Strategy"
+        S3[Supervisor] --> E1[Child X]
+        E1 -.->|Critical Failure| S3
+        S3 -.->|Escalate to Parent| Root[Parent Supervisor]
+        Root -.->|Decide Strategy| S3
+        Note3[Use: Parent decides<br/>Example: Unrecoverable errors]
+    end
+    
+    style S1 fill:#fb9,stroke:#333,stroke-width:2px
+    style S2 fill:#fb9,stroke:#333,stroke-width:2px
+    style S3 fill:#fb9,stroke:#333,stroke-width:2px
+    style C2 fill:#f99,stroke:#333,stroke-width:2px
+    style G2 fill:#f99,stroke:#333,stroke-width:2px
+    style E1 fill:#f99,stroke:#333,stroke-width:2px
+```
+
+#### Actor Message Protocol
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Supervisor
+    participant CartActor
+    participant EventStore
+    
+    Note over Client,EventStore: Normal Message Flow
+    
+    Client->>CartActor: AddItem(item, replyTo)
+    Note over CartActor: Process in mailbox<br/>One message at a time
+    CartActor->>CartActor: Validate business rules
+    CartActor->>EventStore: Persist(ItemAdded)
+    EventStore-->>CartActor: Success
+    CartActor->>CartActor: Apply event to state
+    CartActor-->>Client: ItemAdded(itemId)
+    
+    Note over Client,EventStore: Failure and Recovery
+    
+    Client->>CartActor: RemoveItem(badId, replyTo)
+    CartActor->>CartActor: Validation fails
+    CartActor->>CartActor: Exception thrown
+    CartActor->>Supervisor: Failure signal
+    
+    Note over Supervisor: Apply supervision strategy<br/>Decision: Restart
+    
+    Supervisor->>CartActor: Restart actor
+    CartActor->>EventStore: Replay events
+    EventStore-->>CartActor: Event history
+    CartActor->>CartActor: Rebuild state
+    
+    Note over CartActor: Actor recovered<br/>Ready for new messages
+    
+    Client->>CartActor: GetCart(replyTo)
+    CartActor-->>Client: Cart(items)
+```
+
+#### Actor Lifecycle
+
+```mermaid
+stateDiagram-v2
+    [*] --> Creating: Supervisor creates actor
+    Creating --> Started: Actor initialized
+    
+    Started --> Idle: No messages
+    Idle --> Processing: Message received
+    Processing --> Idle: Message processed
+    
+    Processing --> Failed: Exception thrown
+    Failed --> Restarting: Supervisor: Restart
+    Failed --> Stopped: Supervisor: Stop
+    Failed --> Escalated: Supervisor: Escalate
+    
+    Restarting --> Recovering: Replay events
+    Recovering --> Started: State restored
+    
+    Stopped --> [*]
+    
+    Idle --> Passivated: Idle timeout
+    Passivated --> Started: New message arrives
+    
+    Processing --> Terminated: Poison Pill
+    Terminated --> [*]
+    
+    note right of Failed
+        Supervision Strategy:
+        - Restart (recoverable)
+        - Stop (unrecoverable)
+        - Escalate (parent decides)
+    end note
+```
+
+#### Mailbox and Backpressure
+
+```mermaid
+graph LR
+    subgraph "Message Producers"
+        C1[Client 1] -->|AddItem| Q
+        C2[Client 2] -->|RemoveItem| Q
+        C3[Client 3] -->|GetCart| Q
+    end
+    
+    subgraph "Actor Mailbox"
+        Q[Message Queue<br/>Bounded Size: 1000]
+        Q -->|FIFO| Process
+    end
+    
+    subgraph "Actor Processing"
+        Process[Cart Actor<br/>Processes 1 at a time]
+        Process -->|Update State| State[(In-Memory<br/>State)]
+        Process -->|Persist Events| ES[(Event Store)]
+    end
+    
+    Q -.->|Mailbox Full| BP[Backpressure Signal]
+    BP -.->|Slow Down| C1
+    BP -.->|Slow Down| C2
+    BP -.->|Slow Down| C3
+    
+    style Q fill:#ffb,stroke:#333,stroke-width:2px
+    style Process fill:#bfb,stroke:#333,stroke-width:2px
+    style BP fill:#f99,stroke:#333,stroke-width:2px
+```
+
 ### Actor Design Patterns for TJMPaaS
 
 **Entity Actors**:

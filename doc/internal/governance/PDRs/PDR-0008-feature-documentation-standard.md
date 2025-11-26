@@ -315,6 +315,113 @@ Tracks:
 
 ### Feature Creation Workflow
 
+The following diagram shows the complete feature documentation lifecycle:
+
+```mermaid
+flowchart TD
+    Start([New Feature Needed]) --> Plan[Step 1: Planning]
+    
+    subgraph "Planning Phase"
+        Plan --> CreateGherkin[Create .feature file<br/>Gherkin scenarios]
+        CreateGherkin --> CreateMD[Create .md file<br/>From FEATURE-TEMPLATE.md]
+        CreateMD --> IdentifyGov[Identify Applicable Governance<br/>ADRs/PDRs/POLs]
+        IdentifyGov --> DocGaps[Document Gaps<br/>in feature-gaps.md]
+        DocGaps --> UpdateCanvas[Update SERVICE-CANVAS.md<br/>Features section]
+    end
+    
+    UpdateCanvas --> Implement[Step 2: Implementation]
+    
+    subgraph "Implementation Phase"
+        Implement --> CodeActors[Implement Actors/<br/>Routes/Events]
+        CodeActors --> WriteTests[Write Feature Tests<br/>ScalaTest + Cucumber]
+        WriteTests --> UpdateMD[Update .md with<br/>Implementation Details]
+        UpdateMD --> UpdateStatus[Update Status<br/>🔴 → 🟡 → 🟢]
+    end
+    
+    UpdateStatus --> Review[Step 3: Review]
+    
+    subgraph "Review Phase"
+        Review --> VerifyGov{Governance Refs<br/>Correct?}
+        VerifyGov -->|No| FixGov[Fix References]
+        FixGov --> VerifyGov
+        VerifyGov -->|Yes| CheckScenarios{Scenarios Match<br/>Implementation?}
+        CheckScenarios -->|No| FixScenarios[Update Scenarios]
+        FixScenarios --> CheckScenarios
+        CheckScenarios -->|Yes| ValidateAPI{API Examples<br/>Work?}
+        ValidateAPI -->|No| FixAPI[Fix Examples]
+        FixAPI --> ValidateAPI
+        ValidateAPI -->|Yes| FinalCanvas[Final Canvas Update]
+    end
+    
+    FinalCanvas --> Maintain[Step 4: Maintenance]
+    
+    subgraph "Maintenance Phase"
+        Maintain --> KeepCurrent[Keep Features Current<br/>with Code Changes]
+        KeepCurrent --> UpdateGaps[Update Gap Analysis<br/>as Gaps Closed]
+        UpdateGaps --> Quarterly[Quarterly Review<br/>Validate Accuracy]
+    end
+    
+    Quarterly --> Change{Code<br/>Changed?}
+    Change -->|Yes| KeepCurrent
+    Change -->|No| Complete([Feature Complete])
+    
+    style Plan fill:#bfb,stroke:#333,stroke-width:2px
+    style Implement fill:#bbf,stroke:#333,stroke-width:2px
+    style Review fill:#fbf,stroke:#333,stroke-width:2px
+    style Maintain fill:#ffb,stroke:#333,stroke-width:2px
+```
+
+### Dual Format Relationship
+
+The `.feature` and `.md` files work together to provide complete feature documentation:
+
+```mermaid
+graph TB
+    subgraph "Gherkin .feature"
+        GH[Gherkin Scenarios<br/>Given/When/Then]
+        GH --> BDD[Business-Readable<br/>Executable Specs]
+        BDD --> Test[ScalaTest + Cucumber<br/>Automated Tests]
+    end
+    
+    subgraph "Markdown .md"
+        MD[Technical Documentation<br/>From FEATURE-TEMPLATE.md]
+        MD --> VP[Value Propositions<br/>3 Perspectives]
+        MD --> Gov[Governance References<br/>ADRs/PDRs/POLs]
+        MD --> Impl[Implementation Details<br/>Code Locations]
+        MD --> Gap[Gap Analysis<br/>What's Missing]
+        MD --> API[API Examples<br/>& Sequence Diagrams]
+    end
+    
+    subgraph "Integration Points"
+        Canvas[SERVICE-CANVAS.md<br/>Features Section]
+        InferenceMap[GOVERNANCE-FEATURE<br/>-INFERENCE-MAP.md]
+        FeatureGaps[feature-gaps.md<br/>Cumulative Gaps]
+    end
+    
+    GH -->|Scenarios| Test
+    Test -->|Validates| Impl
+    
+    MD -->|Links| Gov
+    Gov -->|Validates| InferenceMap
+    
+    MD -->|Status| Canvas
+    GH -->|Referenced| Canvas
+    
+    Gap -->|Aggregates| FeatureGaps
+    
+    Canvas -->|Overview| GH
+    Canvas -->|Overview| MD
+    
+    InferenceMap -->|Bidirectional| Gov
+    InferenceMap -->|Tracking| MD
+    
+    style GH fill:#bfb,stroke:#333,stroke-width:2px
+    style MD fill:#bbf,stroke:#333,stroke-width:2px
+    style Canvas fill:#fbf,stroke:#333,stroke-width:2px
+    style InferenceMap fill:#ffb,stroke:#333,stroke-width:2px
+    style FeatureGaps fill:#fbb,stroke:#333,stroke-width:2px
+```
+
 **Step 1: Planning** (before code):
 1. Create `<feature-name>.feature` (Gherkin scenarios)
 2. Create `<feature-name>.md` (from template)
