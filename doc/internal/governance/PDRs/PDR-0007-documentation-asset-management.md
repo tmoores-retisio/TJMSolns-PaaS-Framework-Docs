@@ -195,6 +195,13 @@ doc/
 - Shows completed usage of templates
 - Not modified after creation (unless corrections needed)
 
+**Service Examples** (doc/internal/services/):
+- Status: "Reference Implementation"
+- Authority: "TJMPaaS Official"
+- Complete service designs demonstrating templates and standards
+- Example: Entity Management Service (18 files) - shows all 8 templates, multi-tenant patterns, 5 complete features with BDD scenarios
+- Shows documentation organization at service level (co-location of related docs)
+
 **Legacy Content** (doc/internal/archive/legacy/):
 - Status: "Legacy" or "Previous Project"
 - Authority: "Reference Only - Not for Use"

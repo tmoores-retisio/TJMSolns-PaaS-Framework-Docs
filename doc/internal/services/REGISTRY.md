@@ -13,7 +13,8 @@ This registry tracks all services in the TJMPaaS ecosystem.
 
 | Service | Repository | Canvas | Status | Version | Description |
 |---------|-----------|--------|--------|---------|-------------|
-| *No services implemented yet* | - | - | - | - | Services will be added as they are developed |
+| **Entity Management Service** | [Internal Design Docs](../services/entity-management/) | [SERVICE-CANVAS.md](../services/entity-management/SERVICE-CANVAS.md) | Design Complete | 0.1.0-design | Multi-tenant entity management: tenants, organizations, users, roles, permissions, audit trail. Reference implementation demonstrating all 8 templates. |
+| **Provisioning Service** | [Internal Design Docs](../services/provisioning-service/) | [SERVICE-CHARTER.md](../services/provisioning-service/SERVICE-CHARTER.md) | Planned (Stub) | - | Central provisioning and entitlement management (vision stub only) |
 
 ## Planned Services
 
@@ -48,6 +49,20 @@ See [PDR-0004: Repository Organization Strategy](../governance/PDRs/PDR-0004-rep
 ## Service Canvas Requirement
 
 All services must maintain a `SERVICE-CANVAS.md` file in the repository root providing comprehensive service overview.
+
+See [PDR-0006: Service Canvas Documentation Standard](../governance/PDRs/PDR-0006-service-canvas-standard.md) for requirements.
+
+## Reference Implementation
+
+**Entity Management Service** provides a complete reference implementation:
+- **Location**: `doc/internal/services/entity-management/`
+- **Core Documentation** (8 files): SERVICE-CHARTER.md, SERVICE-CANVAS.md, SERVICE-ARCHITECTURE.md, API-SPECIFICATION.md, DEPLOYMENT-RUNBOOK.md, TELEMETRY-SPECIFICATION.md, ACCEPTANCE-CRITERIA.md, SECURITY-REQUIREMENTS.md
+- **Feature Documentation** (5 features, 10 files): Tenant Provisioning, Organization Hierarchy, User Management, Role-Based Permissions, Audit Trail (each with .feature + .md)
+- **Total**: 18 comprehensive design documents demonstrating all templates and multi-tenant patterns
+- **Multi-Tenant Patterns**: Demonstrates all 4 seam levels (Tenant, Tenant-Service, Tenant-Service-Feature, Tenant-Service-Role)
+- **Architecture Patterns**: CQRS, Event Sourcing, Actor Model, REST APIs, CloudEvents
+
+Use Entity Management Service as reference when designing new services.
 
 See [PDR-0006: Service Canvas Documentation Standard](../governance/PDRs/PDR-0006-service-canvas-standard.md) for details.
 

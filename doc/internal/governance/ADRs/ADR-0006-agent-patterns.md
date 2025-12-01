@@ -676,15 +676,41 @@ This decision is validated by comprehensive industry research:
 
 **Features That Validate This Decision**:
 
-*To be documented in Phase 1 (Governance Inference Analysis)*
+**Entity Management Service** demonstrates actor model patterns:
 
-Expected features using actor model:
-- **Stateful Entities**: Shopping cart, order, user session, payment transaction actors
-- **Message Protocols**: Type-safe command/event/query messages with pattern matching
-- **Supervision**: Documented supervision strategies (restart, stop, escalate)
-- **Concurrency**: Actor-based concurrency without locks or shared mutable state
+1. **Tenant Provisioning** (EMS-F001):
+   - TenantActor manages tenant lifecycle
+   - Commands: CreateTenant, UpdateSubscription
+   - Events: TenantProvisioned, SubscriptionChanged
+   - Supervision: Restart on transient failures
 
-**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#adr-0006-agent-based-service-patterns-actor-model)
+2. **Organization Hierarchy** (EMS-F002):
+   - OrganizationActor per organization
+   - Hierarchy validation (acyclic graph enforcement)
+   - Commands: CreateOrganization, MoveOrganization, DeleteOrganization
+   - Events: OrganizationCreated, OrganizationMoved, OrganizationDeleted
+
+3. **User Management** (EMS-F003):
+   - UserActor per user
+   - Commands: CreateUser, UpdateUserRole, DeactivateUser
+   - Events: UserCreated, UserRoleChanged, UserDeactivated
+   - Role-based state transitions
+
+4. **Role-Based Permissions** (EMS-F004):
+   - RoleActor per custom role
+   - Permission cache (5-minute TTL) for < 1ms checks
+   - Commands: CreateRole, UpdatePermissions
+   - Events: RoleCreated, RolePermissionsUpdated
+
+5. **Audit Trail** (EMS-F005):
+   - KafkaAuditLogger (async actor)
+   - AuditEventConsumer (processes audit events)
+   - Immutable append-only logging
+   - 7-year retention with tiered storage
+
+**Architecture Reference**: See [Entity Management Service Architecture](../../services/entity-management/SERVICE-ARCHITECTURE.md) for complete actor design including supervision strategies, message protocols, and state machines.
+
+**Multi-Tenant Integration**: All actors include tenant_id scoping, cross-tenant isolation enforced at actor boundaries per [MULTI-TENANT-SEAM-ARCHITECTURE.md](../../standards/MULTI-TENANT-SEAM-ARCHITECTURE.md).
 
 ## References
 

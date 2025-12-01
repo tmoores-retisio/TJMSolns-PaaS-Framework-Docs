@@ -417,15 +417,34 @@ Metrics:
 
 **Features That Validate This Decision**:
 
-*To be documented in Phase 2 (Core Service Features)*
+**Entity Management Service** demonstrates complete service canvas usage:
 
-Expected features:
-- All service features should be listed in SERVICE-CANVAS.md Features section
-- Canvas should provide quick status overview of all features (🟢/🟡/🔴)
-- Canvas should link to detailed feature documentation
-- Features section validates canvas is living document
+**Canvas Location**: [services/entity-management/SERVICE-CANVAS.md](../../services/entity-management/SERVICE-CANVAS.md)
 
-**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#pdr-0006-service-canvas-documentation-standard)
+**Canvas Sections Demonstrated**:
+1. **Service Identity**: Mission, value proposition, tech stack (Scala 3, Pekko actors, ZIO effects)
+2. **Dependencies**: PostgreSQL, Kafka, Redis, Authentication Service
+3. **Architecture**: Actor-based design with TenantActor, OrganizationActor, UserActor, RoleActor, AuditLogger
+4. **API Contract**:
+   - Commands: CreateTenant, CreateOrganization, CreateUser, CreateRole (12+ total)
+   - Queries: ListOrganizations, ListUsers, GetPermissions (8+ total)
+   - Events: TenantProvisioned, UserCreated, RolePermissionsUpdated (15+ total)
+5. **Non-Functional Requirements**: 
+   - Responsive: <100ms P95 for queries, <200ms P95 for commands
+   - Resilient: Actor supervision, circuit breakers
+   - Elastic: Horizontal scaling to 10K+ tenants
+   - Message-Driven: Kafka integration, async boundaries
+6. **Observability**: Health checks (/health, /ready), 20+ Prometheus metrics, structured logging, distributed tracing
+7. **Operations**: Docker deployment, Kubernetes manifests, runbooks for common scenarios
+8. **Security**: JWT authentication, X-Tenant-ID validation, RBAC enforcement, audit logging
+9. **Features Section**: Lists all 5 features with status 🟢 (design complete)
+
+**Related Documentation**:
+- [Entity Management Features](../../services/entity-management/features/) - 5 features with BDD scenarios
+- [Entity Management Architecture](../../services/entity-management/SERVICE-ARCHITECTURE.md) - Detailed technical design
+- [Entity Management API Spec](../../services/entity-management/API-SPECIFICATION.md) - OpenAPI specification
+
+**Template Validation**: Entity Management Service proves SERVICE-CANVAS.md template is comprehensive and practical for complex multi-tenant services. Canvas provides quick reference while detailed docs provide depth.
 
 ## References
 

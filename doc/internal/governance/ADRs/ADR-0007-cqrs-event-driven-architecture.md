@@ -647,20 +647,43 @@ This decision is validated by comprehensive industry research:
 
 **Features That Validate This Decision**:
 
-*To be documented in Phase 1 (Governance Inference Analysis)*
+**Entity Management Service** demonstrates CQRS and Event-Driven patterns:
 
-Expected features demonstrating CQRS/Event-Driven patterns:
+### CQRS Implementation
 
-**CQRS Maturity Levels**:
-- **Level 2 (Standard CQRS)**: Shopping cart, product catalog, user profiles - separate read/write models without event sourcing
-- **Level 3 (Full CQRS/ES)**: Orders, payments, inventory - event sourcing for complete audit trail
+**Level 2 (Standard CQRS)** - Used in Entity Management:
+- **Organization Hierarchy** (EMS-F002): Separate write model (tree structure validation) and read model (denormalized hierarchy views)
+- **User Management** (EMS-F003): Write model validates business rules, read model optimized for queries (by organization, role, status)
+- **Role-Based Permissions** (EMS-F004): Write model manages role definitions, read model with 5-minute cache for <1ms permission checks
 
-**Event-Driven Integration**:
-- Features publishing domain events (CartCheckedOut, OrderPlaced, PaymentProcessed)
-- Features consuming events from other services (inventory updates, order notifications)
-- Saga patterns for distributed transactions (checkout, fulfillment)
+**Level 3 (Full CQRS/ES)** - Planned for audit-critical domains:
+- **Audit Trail** (EMS-F005): Event sourcing for complete audit history, immutable append-only log, 7-year retention
+- Future: Order processing, payment transactions (require complete audit trail)
 
-**Inference Tracking**: See [GOVERNANCE-FEATURE-INFERENCE-MAP.md](../../GOVERNANCE-FEATURE-INFERENCE-MAP.md#adr-0007-cqrs-and-event-driven-architecture)
+### Event-Driven Integration
+
+**Domain Events Published** (CloudEvents format per EVENT-SCHEMA-STANDARDS.md):
+1. **Tenant Provisioning**: `TenantProvisioned` → triggers downstream tenant setup
+2. **Organization Management**: `OrganizationCreated`, `OrganizationMoved`, `OrganizationDeleted` (with cascade)
+3. **User Lifecycle**: `UserCreated`, `UserRoleChanged`, `UserDeactivated` → affects access control
+4. **Role Changes**: `RoleCreated`, `RolePermissionsUpdated` → invalidates permission caches across services
+5. **Audit Events**: 15+ event types (auth, authz, data access, modifications) → compliance reporting
+
+**Event Consumption Patterns**:
+- **Provisioning Service** (planned): Consumes `SubscriptionPlanChanged` → updates entitlements
+- **Notification Service** (future): Consumes `UserCreated` → sends welcome email
+- **Analytics Service** (future): Consumes all events → business intelligence
+
+**Kafka Topics**:
+- `entity-management.tenants.v1`
+- `entity-management.organizations.v1`
+- `entity-management.users.v1`
+- `entity-management.roles.v1`
+- `entity-management.audit.v1`
+
+**Architecture Reference**: See [Entity Management API Specification](../../services/entity-management/API-SPECIFICATION.md) for complete command/query/event schemas and [Entity Management Architecture](../../services/entity-management/SERVICE-ARCHITECTURE.md) for CQRS patterns and event flows.
+
+**Multi-Tenant Event Scoping**: All events include mandatory `tenant_id` field per [EVENT-SCHEMA-STANDARDS.md](../../standards/EVENT-SCHEMA-STANDARDS.md).
 
 ## References
 

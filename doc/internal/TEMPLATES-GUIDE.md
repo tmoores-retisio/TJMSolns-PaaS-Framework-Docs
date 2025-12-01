@@ -63,13 +63,37 @@
 
 **Usage**: Document significant work sessions, decisions, and outcomes for project history.
 
+### Granular Service Templates (New - December 2025)
+
+| Template | Location | Purpose | Status |
+|----------|----------|---------|--------|
+| [SERVICE-CHARTER.md](templates/SERVICE-CHARTER.md) | `doc/internal/templates/` | Service strategy and business context | Active Template |
+| [SERVICE-ARCHITECTURE.md](templates/SERVICE-ARCHITECTURE.md) | `doc/internal/templates/` | Technical architecture and design | Active Template |
+| [API-SPECIFICATION.md](templates/API-SPECIFICATION.md) | `doc/internal/templates/` | OpenAPI specification template | Active Template |
+| [FEATURE-SPECIFICATION.md](templates/FEATURE-SPECIFICATION.md) | `doc/internal/templates/` | Feature spec with BDD scenarios | Active Template |
+| [DEPLOYMENT-RUNBOOK.md](templates/DEPLOYMENT-RUNBOOK.md) | `doc/internal/templates/` | Deployment and operations guide | Active Template |
+| [TELEMETRY-SPECIFICATION.md](templates/TELEMETRY-SPECIFICATION.md) | `doc/internal/templates/` | Observability specification | Active Template |
+| [ACCEPTANCE-CRITERIA.md](templates/ACCEPTANCE-CRITERIA.md) | `doc/internal/templates/` | Quality gates and acceptance criteria | Active Template |
+| [SECURITY-REQUIREMENTS.md](templates/SECURITY-REQUIREMENTS.md) | `doc/internal/templates/` | Security requirements checklist | Active Template |
+
+**Usage**: Copy entire template to service directory, fill in sections. These complement the SERVICE-CANVAS.md.
+
 ### Examples (Reference Implementations)
 
 | Example | Location | Purpose |
-|----------|----------|---------|
+|----------|----------|----------|
 | [CartService-CANVAS-example.md](examples/CartService-CANVAS-example.md) | `doc/internal/examples/` | Completed service canvas showing best practices |
+| **Entity Management Service** | [services/entity-management/](services/entity-management/) | **Complete service design** demonstrating all 8 templates + 5 features with BDD scenarios |
 
 **Note**: Examples are reference implementations, not templates to copy.
+
+**Entity Management Service** is the primary reference implementation showing:
+- All 8 granular templates in use
+- 5 complete features (tenant provisioning, org hierarchy, user management, role permissions, audit trail)
+- Multi-tenant patterns across all 4 seam levels
+- CQRS, Event Sourcing, Actor Model, REST APIs, CloudEvents
+- BDD scenarios with Gherkin (.feature files)
+- Production-ready quality (metrics, NFRs, security, observability)
 
 ---
 
