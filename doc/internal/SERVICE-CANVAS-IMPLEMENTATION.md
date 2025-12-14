@@ -30,7 +30,7 @@ Successfully implemented the Service Canvas documentation approach for TJMPaaS s
 
 ### Examples
 
-**`doc/internal/examples/CartService-CANVAS-example.md`**
+**`doc/internal/technical/examples/CartService-CANVAS-example.md`**
 - Realistic example of canvas for shopping cart service
 - Shows ShoppingCartActor with event sourcing
 - Documents Commands: AddItem, RemoveItem, UpdateQuantity, ApplyPromotion, Checkout
@@ -41,7 +41,7 @@ Successfully implemented the Service Canvas documentation approach for TJMPaaS s
 
 ### Service Registry
 
-**`doc/internal/services/REGISTRY.md`**
+**`doc/internal/technical/services/REGISTRY.md`**
 - Central index of all TJMPaaS services
 - Includes Canvas column linking to each service's canvas
 - Documents service categories (Commerce, Inventory, User Management, etc.)
@@ -218,12 +218,12 @@ When creating a new service:
 3. **Fill in sections**: Complete all sections before/during development
 4. **Review**: Validate canvas matches implementation
 5. **Link from README**: Add prominent link from README.md
-6. **Update registry**: Add service to `doc/internal/services/REGISTRY.md`
+6. **Update registry**: Add service to `doc/internal/technical/services/REGISTRY.md`
 7. **Maintain**: Keep canvas current with service changes
 
 ## Example Usage
 
-See `doc/internal/examples/CartService-CANVAS-example.md` for a complete, realistic example showing:
+See `doc/internal/technical/examples/CartService-CANVAS-example.md` for a complete, realistic example showing:
 - Shopping cart service with event sourcing
 - ShoppingCartActor managing cart state
 - Complete CQRS API (commands, queries, events)
@@ -237,8 +237,8 @@ See `doc/internal/examples/CartService-CANVAS-example.md` for a complete, realis
 ```
 doc/internal/templates/SERVICE-CANVAS.md
 doc/internal/governance/PDRs/PDR-0006-service-canvas-standard.md
-doc/internal/examples/CartService-CANVAS-example.md
-doc/internal/services/REGISTRY.md
+doc/internal/technical/examples/CartService-CANVAS-example.md
+doc/internal/technical/services/REGISTRY.md
 ```
 
 ## Files Updated

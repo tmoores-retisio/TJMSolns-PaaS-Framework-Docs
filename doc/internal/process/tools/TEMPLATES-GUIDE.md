@@ -51,7 +51,7 @@
 
 | Template | Location | Purpose | Status |
 |----------|----------|---------|--------|
-| [BEST-PRACTICE-TEMPLATE.md](best-practices/BEST-PRACTICE-TEMPLATE.md) | `doc/internal/best-practices/` | Best practices research documents | Active Template |
+| [BEST-PRACTICE-TEMPLATE.md](../../technical/best-practices/BEST-PRACTICE-TEMPLATE.md) | `doc/internal/technical/best-practices/` | Best practices research documents | Active Template |
 
 **Usage**: Copy to appropriate subdirectory (`architecture/`, `development/`, etc.) and fill in research findings.
 
@@ -59,7 +59,7 @@
 
 | Template | Location | Purpose | Status |
 |----------|----------|---------|--------|
-| [SESSION-SUMMARY-TEMPLATE.md](audit/SESSION-SUMMARY-TEMPLATE.md) | `doc/internal/audit/` | Session summary documentation | Active Template |
+| [SESSION-SUMMARY-TEMPLATE.md](../../compliance/audit/SESSION-SUMMARY-TEMPLATE.md) | `doc/internal/compliance/audit/` | Session summary documentation | Active Template |
 
 **Usage**: Document significant work sessions, decisions, and outcomes for project history.
 
@@ -82,7 +82,7 @@
 
 | Example | Location | Purpose |
 |----------|----------|----------|
-| [CartService-CANVAS-example.md](examples/CartService-CANVAS-example.md) | `doc/internal/examples/` | Completed service canvas showing best practices |
+| [CartService-CANVAS-example.md](../../technical/examples/CartService-CANVAS-example.md) | `doc/internal/technical/examples/` | Completed service canvas showing best practices |
 | **Entity Management Service** | [services/entity-management/](services/entity-management/) | **Complete service design** demonstrating all 8 templates + 5 features with BDD scenarios |
 
 **Note**: Examples are reference implementations, not templates to copy.
@@ -172,24 +172,24 @@ All templates include status frontmatter:
 
 ### For Best Practices Research
 
-1. **Template location**: `doc/internal/best-practices/BEST-PRACTICE-TEMPLATE.md`
+1. **Template location**: `doc/internal/technical/best-practices/BEST-PRACTICE-TEMPLATE.md`
 
 2. **Copy to appropriate subdirectory**:
    ```bash
-   cp doc/internal/best-practices/BEST-PRACTICE-TEMPLATE.md \
-      doc/internal/best-practices/architecture/new-topic.md
+   cp doc/internal/technical/best-practices/BEST-PRACTICE-TEMPLATE.md \
+      doc/internal/technical/best-practices/architecture/new-topic.md
    ```
 
 3. **Fill in research findings** following structure
 
 ### For Session Summaries
 
-1. **Template location**: `doc/internal/audit/SESSION-SUMMARY-TEMPLATE.md`
+1. **Template location**: `doc/internal/compliance/audit/SESSION-SUMMARY-TEMPLATE.md`
 
 2. **Copy with date-based naming**:
    ```bash
-   cp doc/internal/audit/SESSION-SUMMARY-TEMPLATE.md \
-      doc/internal/audit/session-2025-11-26-topic.md
+   cp doc/internal/compliance/audit/SESSION-SUMMARY-TEMPLATE.md \
+      doc/internal/compliance/audit/sessions/session-2025-11-26-topic.md
    ```
 
 3. **Document session outcomes**

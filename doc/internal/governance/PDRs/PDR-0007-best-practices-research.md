@@ -39,8 +39,8 @@ Establish a framework for:
 
 **Establish a research-backed best practices framework** with:
 
-1. **Best Practices Directory**: `doc/internal/best-practices/`
-2. **Best Practices Guide**: `doc/internal/BEST-PRACTICES-GUIDE.md` (index and process)
+1. **Best Practices Directory**: `doc/internal/technical/best-practices/`
+2. **Best Practices Guide**: `doc/internal/technical/BEST-PRACTICES-GUIDE.md` (index and process)
 3. **Structured Documentation**: Standard template for research findings
 4. **Critical Thinking**: AI assistant provides evidence-based challenges
 5. **Contextual Application**: Best practices inform, not dictate decisions

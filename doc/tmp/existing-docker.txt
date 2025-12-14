@@ -1,0 +1,42 @@
+Docker/:
+total 36
+drwxrwxr-x  7 tjm tjm 4096 Nov  7 16:40 .
+drwx------ 37 tjm tjm 4096 Dec 14 10:59 ..
+drwxrwxr-x  2 tjm tjm 4096 Nov  7 17:03 calibre
+-rw-rw-r--  1 tjm tjm  321 Oct 17 17:48 docker-compose.yml
+-rw-rw-r--  1 tjm tjm   48 Oct 17 17:49 .env
+drwxrwxr-x  2 tjm tjm 4096 Oct 17 19:20 local-llms
+drwxrwxr-x  2 tjm tjm 4096 Oct 17 17:47 mongo
+drwxrwxr-x  2 tjm tjm 4096 Oct 17 18:15 plex
+drwxrwxr-x  2 tjm tjm 4096 Oct 17 17:36 postgres
+
+Docker/calibre:
+total 12
+drwxrwxr-x 2 tjm tjm 4096 Nov  7 17:03 .
+drwxrwxr-x 7 tjm tjm 4096 Nov  7 16:40 ..
+-rw-rw-r-- 1 tjm tjm  362 Nov  7 17:03 docker-compose.yml
+
+Docker/local-llms:
+total 12
+drwxrwxr-x 2 tjm tjm 4096 Oct 17 19:20 .
+drwxrwxr-x 7 tjm tjm 4096 Nov  7 16:40 ..
+-rw-rw-r-- 1 tjm tjm  520 Oct 17 19:20 docker-compose.yml
+
+Docker/mongo:
+total 8
+drwxrwxr-x 2 tjm tjm 4096 Oct 17 17:47 .
+drwxrwxr-x 7 tjm tjm 4096 Nov  7 16:40 ..
+
+Docker/plex:
+total 16
+drwxrwxr-x 2 tjm tjm 4096 Oct 17 18:15 .
+drwxrwxr-x 7 tjm tjm 4096 Nov  7 16:40 ..
+-rw-rw-r-- 1 tjm tjm  580 Oct 17 18:13 docker-compose.yml
+-rw-rw-r-- 1 tjm tjm   38 Oct 17 18:15 .env
+
+Docker/postgres:
+total 16
+drwxrwxr-x 2 tjm tjm 4096 Oct 17 17:36 .
+drwxrwxr-x 7 tjm tjm 4096 Nov  7 16:40 ..
+-rw-rw-r-- 1 tjm tjm  330 Oct 17 17:36 docker-compose.yml
+-rw-rw-r-- 1 tjm tjm   28 Oct 17 17:33 .env

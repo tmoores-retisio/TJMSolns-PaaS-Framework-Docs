@@ -13,9 +13,9 @@
 | **ADR** | Major technical/architecture decision | `doc/internal/governance/ADRs/ADR-TEMPLATE.md` | Tech stack, CQRS, actors, containerization |
 | **PDR** | Workflow/process change | `doc/internal/governance/PDRs/PDR-TEMPLATE.md` | Repository organization, framework selection, documentation standards |
 | **POL** | Rules, standards, compliance | `doc/internal/governance/POLs/POL-TEMPLATE.md` | Security policies, data handling, compliance requirements |
-| **Session Summary** | Significant work session | `doc/internal/audit/SESSION-SUMMARY-TEMPLATE.md` | Major conversations, decisions, milestones |
+| **Session Summary** | Significant work session | `doc/internal/compliance/audit/SESSION-SUMMARY-TEMPLATE.md` | Major conversations, decisions, milestones |
 | **Service Canvas** | New service | `doc/internal/governance/templates/SERVICE-CANVAS.md` | CartService, OrderService |
-| **Best Practice** | Research/evidence | `doc/internal/best-practices/BEST-PRACTICE-TEMPLATE.md` | Scala 3 research, CQRS patterns, actor frameworks |
+| **Best Practice** | Research/evidence | `doc/internal/technical/best-practices/BEST-PRACTICE-TEMPLATE.md` | Scala 3 research, CQRS patterns, actor frameworks |
 
 ---
 
@@ -270,7 +270,7 @@ docs/                  → Detailed documentation
 
 ### Example
 
-See `doc/internal/examples/CartService-CANVAS-example.md` for reference implementation.
+See `doc/internal/technical/examples/CartService-CANVAS-example.md` for reference implementation.
 
 ---
 
@@ -289,7 +289,7 @@ See `doc/internal/examples/CartService-CANVAS-example.md` for reference implemen
 ### Template Location
 
 ```
-doc/internal/audit/SESSION-SUMMARY-TEMPLATE.md
+doc/internal/compliance/audit/SESSION-SUMMARY-TEMPLATE.md
 ```
 
 Co-located with session summaries.
@@ -309,7 +309,7 @@ Examples:
 
 1. **Copy template**:
    ```bash
-   cd doc/internal/audit
+   cd doc/internal/compliance/audit/sessions
    cp SESSION-SUMMARY-TEMPLATE.md session-2025-11-26-topic.md
    ```
 
@@ -336,7 +336,7 @@ Examples:
 ### Template Location
 
 ```
-doc/internal/best-practices/BEST-PRACTICE-TEMPLATE.md
+doc/internal/technical/best-practices/BEST-PRACTICE-TEMPLATE.md
 ```
 
 Co-located with best practices research.
@@ -344,7 +344,7 @@ Co-located with best practices research.
 ### Naming Convention
 
 ```
-doc/internal/best-practices/[category]/topic.md
+doc/internal/technical/best-practices/[category]/topic.md
 ```
 
 Examples:
@@ -357,7 +357,7 @@ Examples:
 
 1. **Copy template**:
    ```bash
-   cd doc/internal/best-practices/[category]
+   cd doc/internal/technical/best-practices/[category]
    cp ../BEST-PRACTICE-TEMPLATE.md topic.md
    ```
 
@@ -406,7 +406,7 @@ Still maintain single source of truth:
 | BEST-PRACTICE-TEMPLATE.md | `best-practices/` | Near research docs |
 | SESSION-SUMMARY-TEMPLATE.md | `audit/` | Near session summaries |
 
-**Master Index**: `doc/internal/TEMPLATES-GUIDE.md` maps all template locations for human discoverability.
+**Master Index**: `doc/internal/process/tools/TEMPLATES-GUIDE.md` maps all template locations for human discoverability.
 
 ---
 
@@ -511,4 +511,4 @@ All templates and governance documents include status:
 
 ---
 
-**For Examples**: See existing ADRs, PDRs, and the CartService canvas example in `doc/internal/examples/`
+**For Examples**: See existing ADRs, PDRs, and the CartService canvas example in `doc/internal/technical/examples/`

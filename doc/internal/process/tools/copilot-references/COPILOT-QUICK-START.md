@@ -110,7 +110,7 @@ TJMSolns-ServiceName/             # Service repositories (separate)
 - After significant work sessions
 - Major conversations/decisions
 - Milestone completions
-- Template: `doc/internal/audit/SESSION-SUMMARY-TEMPLATE.md`
+- Template: `doc/internal/compliance/audit/SESSION-SUMMARY-TEMPLATE.md`
 
 ---
 
@@ -132,7 +132,7 @@ cp ADR-TEMPLATE.md ADR-NNNN-short-title.md
 
 ### Adding Best Practices Research
 ```bash
-cd doc/internal/best-practices/[category]
+cd doc/internal/technical/best-practices/[category]
 cp ../BEST-PRACTICE-TEMPLATE.md new-topic.md
 # Research, document findings
 # Update BEST-PRACTICES-GUIDE.md index
@@ -140,7 +140,7 @@ cp ../BEST-PRACTICE-TEMPLATE.md new-topic.md
 
 ### Documenting a Session
 ```bash
-cd doc/internal/audit
+cd doc/internal/compliance/audit/sessions
 cp SESSION-SUMMARY-TEMPLATE.md session-2025-11-26-topic.md
 # Fill in decisions, actions, outcomes
 ```

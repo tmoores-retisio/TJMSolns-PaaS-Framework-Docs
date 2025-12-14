@@ -365,7 +365,7 @@ This service is part of TJMPaaS. See [TJMPaaS repository](https://github.com/TJM
 
 ### Service Registry Integration
 
-Update `doc/internal/services/REGISTRY.md` to include canvas column:
+Update `doc/internal/technical/services/REGISTRY.md` to include canvas column:
 
 ```markdown
 ## Active Services

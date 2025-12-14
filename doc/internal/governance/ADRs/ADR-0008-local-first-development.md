@@ -939,7 +939,7 @@ cd TJMSolns-EntityManagementService
 ```
 
 **2. Implement Service**:
-- Follow Entity Management Service design (18 files in doc/internal/services/entity-management/)
+- Follow Entity Management Service design (18 files in doc/internal/technical/services/entity-management/)
 - Mill build: `mill <module>.compile`
 - Run tests: `mill <module>.test`
 - Run locally: `mill <module>.run` (connects to localhost:5432, localhost:9092, etc.)

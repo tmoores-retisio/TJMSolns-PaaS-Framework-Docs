@@ -96,7 +96,7 @@ Current documentation focuses heavily on **governance** (ADRs, PDRs, POLs) and *
 1. **DRY Violation Risk**: API specs in SERVICE-ARCHITECTURE.md + API-SPECIFICATION.md + OpenAPI YAML + generated docs = 4 places to update
 2. **No SDLC Support**: Where do code review checklists, DoR/DoD templates, test reports live?
 3. **No Audit/Review Process**: How do we document governance reviews, compliance audits, ADR review outcomes?
-4. **Disconnected Documentation Types**: Standards (doc/internal/standards/) vs Governance (doc/internal/governance/) vs Templates (doc/internal/templates/) vs Examples (doc/internal/services/)
+4. **Disconnected Documentation Types**: Standards (doc/internal/technical/standards/) vs Governance (doc/internal/governance/) vs Templates (co-located) vs Examples (doc/internal/technical/services/)
 
 **Current State**:
 ```
@@ -125,7 +125,7 @@ Establish clear **documentation layers** with DRY principles:
 - Authority: Immutable decision records
 
 **Layer 2: Standards (Internal) → Merge into Governance**
-- Current: `doc/internal/standards/`
+- Current: `doc/internal/technical/standards/`
 - **Recommended**: Move to `doc/internal/governance/POLs/` or `doc/internal/governance/standards/`
 - Rationale: Standards ARE governance (policies defining how to build). Should be ADRs (technical choices) or POLs (mandatory rules)
 - Action: Create ADR proposing standards migration

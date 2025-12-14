@@ -160,7 +160,7 @@ Per [PDR-0006: Service Canvas Documentation Standard](./PDR-0006-service-canvas-
 
 **Template**: Available at `doc/internal/templates/SERVICE-CANVAS.md` in TJMPaaS governance repo
 
-**Example**: See `doc/internal/examples/CartService-CANVAS-example.md` for reference implementation
+**Example**: See `doc/internal/technical/examples/CartService-CANVAS-example.md` for reference implementation
 
 **Documentation Hierarchy**:
 ```
@@ -350,10 +350,10 @@ Use GitHub template feature to create new services.
 - `doc/internal/CHARTER.md`
 - `doc/internal/ROADMAP.md`
 - `doc/internal/architecture/` - Cross-service architecture
-- `doc/internal/services/` - Service registry and index
-- `doc/internal/audit/` - Conversation logs
+- `doc/internal/technical/services/` - Service registry and index
+- `doc/internal/compliance/audit/` - Conversation logs
 
-**Service index**: Maintain `doc/internal/services/REGISTRY.md`:
+**Service index**: Maintain `doc/internal/technical/services/REGISTRY.md`:
 
 ```markdown
 # Service Registry
@@ -554,7 +554,7 @@ process standards, and project governance, see the
 
 - [Project Charter](https://github.com/TJMSolns/TJMPaaS/blob/main/doc/internal/CHARTER.md)
 - [Architecture Decisions](https://github.com/TJMSolns/TJMPaaS/tree/main/doc/internal/governance/ADRs)
-- [Service Registry](https://github.com/TJMSolns/TJMPaaS/blob/main/doc/internal/services/REGISTRY.md)
+- [Service Registry](https://github.com/TJMSolns/TJMPaaS/blob/main/doc/internal/technical/services/REGISTRY.md)
 ```
 
 ## Revision History

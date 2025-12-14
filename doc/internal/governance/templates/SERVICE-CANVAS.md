@@ -107,7 +107,7 @@ Per [ADR-0007: CQRS and Event-Driven Architecture](https://github.com/TJMSolns/T
 
 **Example**: "Level 2 - Shopping cart requires independent read/write scaling for high browse-to-purchase ratio, but doesn't need complete audit trail of every cart modification."
 
-See [CQRS Patterns Best Practices](../../doc/internal/best-practices/architecture/cqrs-patterns.md) for detailed guidance.
+See [CQRS Patterns Best Practices](../../technical/best-practices/architecture/cqrs-patterns.md) for detailed guidance.
 
 ### Commands (Write Operations)
 
@@ -307,7 +307,7 @@ Per [ADR-0005: Reactive Manifesto Alignment](https://github.com/TJMSolns/TJMPaaS
 | **Roadmap** | [TJMPaaS ROADMAP.md](https://github.com/TJMSolns/TJMPaaS/blob/main/doc/internal/ROADMAP.md) |
 | **ADRs** | [TJMPaaS ADRs](https://github.com/TJMSolns/TJMPaaS/tree/main/doc/internal/governance/ADRs) |
 | **PDRs** | [TJMPaaS PDRs](https://github.com/TJMSolns/TJMPaaS/tree/main/doc/internal/governance/PDRs) |
-| **Service Registry** | [TJMPaaS Service Registry](https://github.com/TJMSolns/TJMPaaS/blob/main/doc/internal/services/REGISTRY.md) |
+| **Service Registry** | [TJMPaaS Service Registry](https://github.com/TJMSolns/TJMPaaS/blob/main/doc/internal/technical/services/REGISTRY.md) |
 
 ---
 

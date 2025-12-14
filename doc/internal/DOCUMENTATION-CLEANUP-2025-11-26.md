@@ -50,7 +50,7 @@ doc/internal/
 ### 3. Migrated Legacy Templates
 
 **Moved from**: `doc/tmp/*.md`  
-**Moved to**: `doc/internal/archive/legacy/retisio-canvas-templates/`
+**Moved to**: `doc/internal/compliance/archive/legacy/retisio-canvas-templates/`
 
 **Files migrated**:
 - MICROSERVICENAME-microservice-canvas.md
@@ -90,8 +90,8 @@ For TJMPaaS, use [SERVICE-CANVAS.md](../../templates/SERVICE-CANVAS.md).
 
 **Created**:
 - `doc/internal/working/README.md`: Explains temporary workspace, cleanup policy
-- `doc/internal/archive/legacy/README.md`: Explains legacy content purpose
-- `doc/internal/archive/legacy/retisio-canvas-templates/README.md`: Detailed explanation of RETISIO templates, why archived, format differences
+- `doc/internal/compliance/archive/legacy/README.md`: Explains legacy content purpose
+- `doc/internal/compliance/archive/legacy/retisio-canvas-templates/README.md`: Detailed explanation of RETISIO templates, why archived, format differences
 
 ### 6. Updated Copilot Instructions
 

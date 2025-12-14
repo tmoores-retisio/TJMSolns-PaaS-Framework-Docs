@@ -433,7 +433,7 @@ Following this analysis, the following governance enhancements were implemented 
 
 **Change**: Established template co-location strategy and master index
 **Documents Created/Modified**:
-- Created `doc/internal/TEMPLATES-GUIDE.md` - Master template index
+- Created `doc/internal/process/tools/TEMPLATES-GUIDE.md` - Master template index
 - Updated PDR-0007 to reflect co-location strategy rationale
 - Updated `.github/copilot-instructions.md` with template locations
 - Moved SERVICE-CANVAS.md to `doc/internal/governance/templates/`
@@ -459,9 +459,9 @@ Following this analysis, the following governance enhancements were implemented 
 
 **Change**: Restructured `.github/copilot-instructions.md` from comprehensive to lean navigational architecture
 **Documents Created/Modified**:
-- Archived original version: `doc/internal/archive/legacy/copilot-instructions/copilot-instructions-v1-2025-11-26.md`
+- Archived original version: `doc/internal/compliance/archive/legacy/copilot-instructions/copilot-instructions-v1-2025-11-26.md`
 - Replaced with lean navigational version (60% reduction: 529 lines → 214 lines)
-- Created quick reference documents in `doc/internal/copilot-references/`:
+- Created quick reference documents in `doc/internal/process/tools/copilot-references/`:
   - COPILOT-QUICK-START.md (228 lines) - Project essentials
   - TECH-STACK-SUMMARY.md (286 lines) - Consolidated technology choices
   - DOCUMENTATION-WORKFLOW.md (514 lines) - When to create ADR/PDR/POL

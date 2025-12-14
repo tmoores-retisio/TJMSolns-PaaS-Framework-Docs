@@ -8,14 +8,14 @@
 **Philosophy**: Critical thinking > agreement; research-backed decisions
 
 **Key Documents** (consult when needed):
-- **Quick Start**: [COPILOT-QUICK-START.md](../doc/internal/copilot-references/COPILOT-QUICK-START.md) - Project essentials
+- **Quick Start**: [COPILOT-QUICK-START.md](../doc/internal/process/tools/copilot-references/COPILOT-QUICK-START.md) - Project essentials
 - **Project Direction**: [CHARTER.md](../doc/internal/CHARTER.md), [ROADMAP.md](../doc/internal/ROADMAP.md)
-- **Standards**: [Documentation Standards Summary](../doc/internal/copilot-references/DOCUMENTATION-WORKFLOW.md)
-- **Templates**: [TEMPLATES-GUIDE.md](../doc/internal/TEMPLATES-GUIDE.md) - Master template index
-- **Tech Stack**: [TECH-STACK-SUMMARY.md](../doc/internal/copilot-references/TECH-STACK-SUMMARY.md)
+- **Standards**: [Documentation Standards Summary](../doc/internal/process/tools/copilot-references/DOCUMENTATION-WORKFLOW.md)
+- **Templates**: [TEMPLATES-GUIDE.md](../doc/internal/process/tools/TEMPLATES-GUIDE.md) - Master template index
+- **Tech Stack**: [TECH-STACK-SUMMARY.md](../doc/internal/process/tools/copilot-references/TECH-STACK-SUMMARY.md)
 - **Architecture**: [ADRs](../doc/internal/governance/ADRs/) - Architectural Decision Records
 - **Process**: [PDRs](../doc/internal/governance/PDRs/) - Process Decision Records
-- **Best Practices**: [BEST-PRACTICES-GUIDE.md](../doc/internal/BEST-PRACTICES-GUIDE.md) - Research index
+- **Best Practices**: [BEST-PRACTICES-GUIDE.md](../doc/internal/technical/BEST-PRACTICES-GUIDE.md) - Research index
 
 ---
 

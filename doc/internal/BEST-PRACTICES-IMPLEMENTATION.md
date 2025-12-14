@@ -23,7 +23,7 @@ This framework operationalizes that philosophy through:
 
 ### Core Documentation
 
-**`doc/internal/BEST-PRACTICES-GUIDE.md`** (~600 lines)
+**`doc/internal/technical/BEST-PRACTICES-GUIDE.md`** (~600 lines)
 - Index of best practices documents
 - Research process and methodology
 - Document template structure
@@ -32,7 +32,7 @@ This framework operationalizes that philosophy through:
 - Critical thinking checklist
 - Integration with governance (ADRs/PDRs)
 
-**`doc/internal/best-practices/README.md`**
+**`doc/internal/technical/best-practices/README.md`**
 - Directory overview
 - Purpose and philosophy
 - Document status definitions
@@ -325,8 +325,8 @@ When significant architectural or commerce decisions arise:
 ## Files Created
 
 ```
-doc/internal/BEST-PRACTICES-GUIDE.md
-doc/internal/best-practices/README.md
+doc/internal/technical/BEST-PRACTICES-GUIDE.md
+doc/internal/technical/best-practices/README.md
 doc/internal/governance/PDRs/PDR-0007-best-practices-research.md
 ```
 
