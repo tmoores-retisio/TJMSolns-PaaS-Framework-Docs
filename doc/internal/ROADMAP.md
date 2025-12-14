@@ -1,8 +1,8 @@
 # TJMPaaS Roadmap
 
-**Version**: 1.1  
+**Version**: 1.2  
 **Date**: November 26, 2025  
-**Updated**: December 14, 2025 (Added local-first development strategy)  
+**Updated**: December 14, 2025 (Added local-first development strategy + Option A execution plan)  
 **Owner**: Tony Moores, TJM Solutions LLC  
 **Status**: Active
 
@@ -11,6 +11,8 @@
 This roadmap outlines the planned phases, milestones, and deliverables for the TJMPaaS framework. The project follows an iterative approach, starting with foundational infrastructure and expanding into comprehensive service offerings.
 
 **Strategic Update (Dec 2025)**: Phases 0-2 adopt local-first development strategy per [ADR-0008](./governance/ADRs/ADR-0008-local-first-development.md) to optimize costs (~$1,200 savings) while maintaining cloud-ready architecture. GCP deployment deferred to Phase 3+ when services are production-ready.
+
+**Execution Plan (Dec 2025)**: [Option A approach](./gaps/GAPS-REMEDIATION-PLAN.md) approved - complete P0 standards gaps (Documentation Architecture, JWT Permissions) before Entity Management Service implementation. 3-4 week timeline with weekly milestones tracked in [GAPS-EXECUTION-TRACKER.md](./gaps/GAPS-EXECUTION-TRACKER.md).
 
 ## Phase 0: Foundation (Current)
 
@@ -37,9 +39,12 @@ This roadmap outlines the planned phases, milestones, and deliverables for the T
 - [x] Repository organization strategy (multi-repo, TJMSolns-<ServiceName>)
 - [x] Entity Management Service design complete (18 files, 5 features)
 - [x] Local-first development strategy (ADR-0008)
-- [ ] **Local infrastructure setup** (docker-compose.yml with PostgreSQL, Kafka, Redis, monitoring)
-- [ ] **Service template repository** (TJMSolns-ServiceTemplate)
-- [ ] **First service implementation** (Entity Management Service)
+- [x] Standards gaps analysis complete (2 resolved, 6 remaining)
+- [x] Remediation plan created (Option A approved)
+- [ ] **Week 1 (Dec 14-20)**: P0 gaps - Documentation Architecture (ADR-0009) + JWT Permissions Design
+- [ ] **Week 2 (Dec 23-27)**: Implementation setup - local-infra/ + TJMSolns-ServiceTemplate
+- [ ] **Week 3 (Dec 30-Jan 3)**: P1 gaps + Begin Entity Management Service implementation
+- [ ] **Week 4+ (Jan 6+)**: Complete Entity Management Service (40 hours estimated)
 
 ### Deliverables
 
