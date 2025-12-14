@@ -9,28 +9,50 @@ This registry tracks all services in the TJMPaaS ecosystem.
 - Links to service canvases and repositories
 - Track service versions and lifecycle
 
-## Active Services
+## Services with Documentation
+
+**Note**: These services have actual design documentation in this repository. They may not be implemented yet.
 
 | Service | Repository | Canvas | Status | Version | Description |
 |---------|-----------|--------|--------|---------|-------------|
-| **Entity Management Service** | [Internal Design Docs](../services/entity-management/) | [SERVICE-CANVAS.md](../services/entity-management/SERVICE-CANVAS.md) | Design Complete | 0.1.0-design | Multi-tenant entity management: tenants, organizations, users, roles, permissions, audit trail. Reference implementation demonstrating all 8 templates. |
-| **Provisioning Service** | [Internal Design Docs](../services/provisioning-service/) | [SERVICE-CHARTER.md](../services/provisioning-service/SERVICE-CHARTER.md) | Planned (Stub) | - | Central provisioning and entitlement management (vision stub only) |
+| **Entity Management Service** | [Internal Design Docs](../services/entity-management/) | [SERVICE-CANVAS.md](../services/entity-management/SERVICE-CANVAS.md) | Design Complete | 0.1.0-design | Multi-tenant entity management: tenants, organizations, users, roles, permissions, audit trail. **Reference implementation demonstrating all 8 templates and standards.** |
+| **Provisioning Service** | [Internal Design Docs](../services/provisioning-service/) | [SERVICE-CHARTER.md](../services/provisioning-service/SERVICE-CHARTER.md) | Vision Stub Only | - | Central provisioning and entitlement management (charter only, no detailed design) |
 
-## Planned Services
+## Aspirational Service Examples
+
+**Note**: These are **example service names** used in documentation to illustrate patterns. They do NOT have design docs or implementations. They represent potential future services for a digital commerce platform.
+
+**Purpose**: Used in ADRs, best practices, and examples to demonstrate architectural patterns (e.g., "shopping cart actor" illustrates actor model, "order processing" illustrates CQRS).
+
+| Example Service | Used to Illustrate | Found In |
+|-----------------|-------------------|----------|
+| CartService | Actor patterns, CQRS, event sourcing | ADRs, best practices examples |
+| OrderService | Saga patterns, distributed transactions | Architecture examples |
+| InventoryService | Eventual consistency, reservation patterns | CQRS examples |
+| PaymentService | Saga patterns, compensation logic | Event-driven examples |
+| NotificationService | Event consumers, async patterns | Integration examples |
+| ProductCatalog | Read models, search optimization | CQRS examples |
+| UserAuthService | JWT, permission resolution | Security examples |
+
+**When These Become Real**: If/when these services are designed, they'll move to "Services with Documentation" section above.
+
+## Future Service Ideas
+
+**Note**: These are potential future services beyond illustrative examples. Not yet designed.
 
 | Service | Priority | Target Phase | Description |
 |---------|----------|--------------|-------------|
-| CartService | High | Phase 1 | Shopping cart management with event sourcing |
-| OrderService | High | Phase 1 | Order processing and fulfillment |
-| InventoryService | High | Phase 1 | Inventory management and reservation |
-| UserAuthService | High | Phase 1 | User authentication and authorization |
 | PricingService | Medium | Phase 2 | Pricing rules and calculations |
-| PaymentGateway | Medium | Phase 2 | Payment processing integration |
-| NotificationService | Medium | Phase 2 | Email, SMS, push notifications |
 | AnalyticsService | Low | Phase 3 | Business intelligence and reporting |
 
 ## Service Status Definitions
 
+### Documentation Status
+- **Design Complete**: Full design documentation exists (8 templates + features), ready for implementation
+- **Vision Stub Only**: High-level charter only, no detailed design
+- **Aspirational Example**: Service name used in examples only, no actual design
+
+### Implementation Status (Future)
 - **Development**: Actively being developed, not production-ready
 - **Staging**: In staging environment, undergoing testing
 - **Production**: Deployed to production, serving traffic
