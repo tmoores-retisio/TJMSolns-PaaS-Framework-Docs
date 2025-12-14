@@ -1,7 +1,8 @@
 # TJMPaaS Project Charter
 
-**Version**: 1.0  
+**Version**: 1.1  
 **Date**: November 26, 2025  
+**Updated**: December 14, 2025 (Added local-first development scope)  
 **Owner**: Tony Moores, TJM Solutions LLC  
 **Status**: Active
 
@@ -23,13 +24,15 @@ Establish TJMPaaS as a flexible, cloud-agnostic platform framework that:
 ### In Scope
 
 - **Containerized Services**: Development of reusable, containerized service components
-- **Cloud Infrastructure**: Initial deployment on Google Cloud Platform (GCP)
+- **Local-First Development** (Phase 0-2): Development and validation on local hardware (monsoon workstation) to optimize costs
+- **Cloud Infrastructure** (Phase 3+): Deployment to Google Cloud Platform (GCP) when services are production-ready
 - **Documentation**: Comprehensive internal documentation for architecture, operations, and governance
 - **Multi-Cloud Planning**: Design decisions that enable future cloud portability
-- **Pilot Phase**: Initial implementation and validation on TJMSolns' GCP infrastructure
+- **Architecture Validation**: Prove reactive patterns, CQRS, event sourcing, and multi-tenant isolation locally before cloud costs
 
 ### Out of Scope (Current Phase)
 
+- **Immediate cloud deployment**: GCP deployment deferred to Phase 3+ per cost optimization strategy (see [ADR-0008](./governance/ADRs/ADR-0008-local-first-development.md))
 - **Multi-cloud deployment**: Active deployment to multiple clouds (planned for post-pilot)
 - **Commercial licensing**: Formal commercialization and external customer onboarding (future phase)
 - **Public-facing services**: External/public service offerings (pilot is internal only)
@@ -47,15 +50,25 @@ Establish TJMPaaS as a flexible, cloud-agnostic platform framework that:
 ### Primary Objectives
 
 1. **Service Library Development**: Create a curated set of containerized services addressing common platform needs
-2. **GCP Pilot Success**: Successfully deploy and validate services on GCP infrastructure
-3. **Documentation Excellence**: Maintain comprehensive, knowledge-base-ready documentation
-4. **Cloud Portability**: Design with multi-cloud deployment as a future capability
+2. **Cost-Optimized Development**: Validate architecture locally (Phase 0-2) before cloud costs, saving ~$1,200 while maintaining cloud-ready design
+3. **Architecture Validation**: Prove reactive patterns, CQRS, event sourcing, actor model, and multi-tenant isolation locally
+4. **GCP Deployment Readiness**: Ensure seamless cloud migration when services are production-ready (Phase 3+)
+5. **Documentation Excellence**: Maintain comprehensive, knowledge-base-ready documentation
+6. **Cloud Portability**: Design with multi-cloud deployment as a future capability
 
 ### Success Metrics
 
-- Number of production-ready containerized services
-- Successful deployment and operation on GCP
+**Phase 0-2 (Local Development)**:
+- Number of services implemented and validated locally
+- Zero infrastructure costs ($0/month target)
+- Architecture patterns proven (CQRS, event sourcing, actors, multi-tenant)
+- Performance targets met locally (<200ms p95 response time)
 - Documentation completeness and accessibility
+
+**Phase 3+ (Cloud Deployment)**:
+- Successful deployment and operation on GCP
+- Migration time per service (<1 day target)
+- Cloud costs justified by service maturity and revenue
 - Architectural decisions support multi-cloud future
 
 ## Technology Foundation

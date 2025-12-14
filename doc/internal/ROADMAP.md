@@ -1,7 +1,8 @@
 # TJMPaaS Roadmap
 
-**Version**: 1.0  
+**Version**: 1.1  
 **Date**: November 26, 2025  
+**Updated**: December 14, 2025 (Added local-first development strategy)  
 **Owner**: Tony Moores, TJM Solutions LLC  
 **Status**: Active
 
@@ -9,17 +10,22 @@
 
 This roadmap outlines the planned phases, milestones, and deliverables for the TJMPaaS framework. The project follows an iterative approach, starting with foundational infrastructure and expanding into comprehensive service offerings.
 
+**Strategic Update (Dec 2025)**: Phases 0-2 adopt local-first development strategy per [ADR-0008](./governance/ADRs/ADR-0008-local-first-development.md) to optimize costs (~$1,200 savings) while maintaining cloud-ready architecture. GCP deployment deferred to Phase 3+ when services are production-ready.
+
 ## Phase 0: Foundation (Current)
 
 **Timeline**: Q4 2025  
-**Status**: In Progress
+**Status**: In Progress  
+**Infrastructure**: 100% Local Development (monsoon workstation)  
+**Cost**: $0/month
 
 ### Objectives
 
 - Establish project structure and governance
 - Define documentation standards and workflows
-- Set up initial GCP infrastructure
+- **Set up local development infrastructure** (Docker Compose)
 - Create foundational documentation
+- **Validate architecture locally before cloud costs**
 
 ### Milestones
 
@@ -29,94 +35,120 @@ This roadmap outlines the planned phases, milestones, and deliverables for the T
 - [x] Initial governance documents (ADRs, PDRs, POLs)
 - [x] Technology stack decisions (Scala 3, Reactive Manifesto, Agent patterns)
 - [x] Repository organization strategy (multi-repo, TJMSolns-<ServiceName>)
-- [ ] Initial GCP environment configuration
-- [ ] First service identification and requirements
+- [x] Entity Management Service design complete (18 files, 5 features)
+- [x] Local-first development strategy (ADR-0008)
+- [ ] **Local infrastructure setup** (docker-compose.yml with PostgreSQL, Kafka, Redis, monitoring)
+- [ ] **Service template repository** (TJMSolns-ServiceTemplate)
+- [ ] **First service implementation** (Entity Management Service)
 
 ### Deliverables
 
 - Project charter and governance framework
-- Documentation structure and templates
-- GCP account and basic infrastructure setup
-- Initial architectural decisions (ADRs 0001-0006)
-- Initial process decisions (PDRs 0001-0004)
+- Documentation structure and templates (96 markdown files, ~12,076 lines)
+- **Local development environment** (Docker Compose, Minikube)
+- Initial architectural decisions (ADRs 0001-0008)
+- Initial process decisions (PDRs 0001-0007)
 - Initial policies (POL-security-baseline, POL-quality-code-standards)
-- Technology stack: Scala 3, Mill, Akka/ZIO, Reactive principles
+- Technology stack: Scala 3, Mill, Pekko/Akka/ZIO, Reactive principles
+- **Entity Management Service design** (complete specifications with multi-tenant patterns)
+- **Local-first strategy** (saves $900-1,200 vs immediate cloud)
 
-## Phase 1: Core Infrastructure Services
+## Phase 1: Core Services Implementation
 
 **Timeline**: Q1 2026  
-**Status**: Planned
+**Status**: Planned  
+**Infrastructure**: 100% Local Development (monsoon workstation)  
+**Cost**: $0/month
 
 ### Objectives
 
-- Deploy foundational infrastructure services using Scala 3
+- **Implement foundational TJMPaaS services locally**
 - Establish containerization standards
-- Implement monitoring and logging
-- Validate multi-cloud design patterns
+- **Validate architecture patterns** (CQRS, event sourcing, actor model)
+- **Prove multi-tenant isolation**
 - Build first reactive services with agent patterns
 
 ### Key Services
 
-- Container orchestration (Kubernetes/GKE)
-- Service mesh and networking
-- Identity and access management (actor-based session management)
-- Logging and monitoring stack
-- CI/CD pipeline infrastructure (Mill-based builds)
+- **Entity Management Service** (multi-tenant foundation, 5 features)
+- **Cart Service** (shopping cart with CQRS)
+- **Provisioning Service** (tenant lifecycle, subscription management)
+- **Product Catalog Service** (product management, search)
 
 ### Technology Implementation
 
-- First Scala 3 services deployed
+- First Scala 3 services **running locally**
 - Mill build pipelines operational
-- Akka Typed or ZIO actors for stateful services
-- Reactive patterns validated in production
+- Pekko/Akka actors for stateful services
+- Reactive patterns **validated locally**
 - Multi-repo structure proven
+- **Local Kubernetes** (Minikube) for orchestration learning
 
 ### Milestones
 
-- [ ] Service template repository (TJMSolns-ServiceTemplate) created
-- [ ] Container orchestration platform deployed
-- [ ] First Scala 3 containerized service deployed to GCP
-- [ ] Monitoring and observability framework operational
-- [ ] Mill-based CI/CD pipeline functional
-- [ ] Service documentation templates established
-- [ ] Actor patterns validated with first stateful service
+- [ ] **Entity Management Service implemented** (40 hours)
+- [ ] **Cart Service implemented** (32 hours)
+- [ ] **Provisioning Service implemented** (24 hours)
+- [ ] **Product Catalog Service implemented** (32 hours)
+- [ ] **All services containerized** and running via Docker Compose
+- [ ] **Observability operational** (Prometheus, Grafana, Jaeger)
+- [ ] **Local Kubernetes deployment** (Minikube) validated
+- [ ] **Actor patterns proven** (supervision, recovery, performance)
+- [ ] **Multi-tenant isolation validated** (no cross-tenant data leakage)
 
-## Phase 2: Application Services
+## Phase 2: Service Expansion and Cloud Validation
 
 **Timeline**: Q2 2026  
-**Status**: Planned
+**Status**: Planned  
+**Infrastructure**: Hybrid - Mostly Local + GCP Free Tier Validation  
+**Cost**: $0-5/month (within Free Tier)
 
 ### Objectives
 
-- Deploy application-layer services
-- Expand service catalog
-- Implement service discovery and configuration
+- **Expand service catalog** (2-3 additional services)
+- **Validate GCP deployment** using Free Tier
+- Prove cloud migration process
 - Establish operational procedures
+- **Maintain local development as primary**
 
 ### Key Services
 
-- API gateway and routing
-- Message queue services
-- Caching layer (Redis/Memcached)
-- Database services (SQL/NoSQL)
-- Object storage integration
+- **Order Service** (order processing, saga patterns)
+- **Payment Service** (payment processing simulation, PCI patterns)
+- **Notification Service** (email/SMS notifications)
+- API gateway and routing (evaluate Kong, Traefik, or native Kubernetes Ingress)
+
+### Cloud Validation Activities
+
+- **Deploy 1-2 services to GKE** (Free Trial credits)
+- Validate Kubernetes manifests
+- Test Cloud SQL connectivity
+- Validate Pub/Sub integration
+- Measure cloud vs local performance
+- Document migration process
 
 ### Milestones
 
-- [ ] API gateway operational
-- [ ] Message queue service deployed
-- [ ] Database services containerized and deployed
-- [ ] Service catalog documentation complete
-- [ ] Operational runbooks created
+- [ ] **Order Service implemented locally** (40 hours)
+- [ ] **Payment Service implemented locally** (32 hours)
+- [ ] **Notification Service implemented locally** (24 hours)
+- [ ] **Entity Management Service deployed to GKE** (cloud validation)
+- [ ] **Cloud SQL database operational**
+- [ ] **Pub/Sub topics configured**
+- [ ] **Migration checklist validated** (local → cloud)
+- [ ] **Service catalog documentation complete**
+- [ ] **Operational runbooks created** (local and cloud)
 
-## Phase 3: Data and Analytics
+## Phase 3: Strategic Cloud Adoption
 
 **Timeline**: Q3 2026  
-**Status**: Planned
+**Status**: Planned  
+**Infrastructure**: Strategic GCP deployment for mature services  
+**Cost**: $200-500/month (scales with service maturity)
 
 ### Objectives
 
-- Deploy data processing services
+- **Deploy mature services to GCP staging/production**
 - Implement analytics capabilities
 - Establish data governance
 - Enable business intelligence

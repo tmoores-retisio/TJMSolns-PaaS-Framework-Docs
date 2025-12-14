@@ -2,6 +2,7 @@
 
 **Status**: Accepted  
 **Date**: 2025-11-26  
+**Updated**: 2025-12-14 (Added local-first timeline context)  
 **Deciders**: Tony Moores  
 **Technical Story**: Phase 0 - Foundation
 
@@ -224,8 +225,40 @@ This decision explicitly supports the vision outlined in `initial-thoughts.md` o
 
 The decision prioritizes practical constraints (existing infrastructure, solo administration) while keeping strategic goals (multi-cloud, commercialization) achievable through thoughtful design patterns.
 
+### Local-First Development Timeline (Added 2025-12-14)
+
+**Phase 0-2 (Q4 2025 - Q2 2026): Local Development**
+
+Per [ADR-0008: Local-First Development Strategy](./ADR-0008-local-first-development.md), GCP adoption is phased:
+
+- **Phase 0-1 (Q4 2025 - Q1 2026)**: 100% local development on monsoon workstation
+  - All services developed and tested locally using Docker Compose
+  - Minikube for local Kubernetes learning
+  - Zero cloud infrastructure costs
+  - Architecture remains cloud-ready (containers, 12-factor, Kubernetes patterns)
+
+- **Phase 2 (Q2 2026)**: Hybrid validation with GCP Free Tier
+  - Continue local development as primary environment
+  - Deploy 1-2 services to GKE for cloud validation
+  - Minimal cloud costs ($0-5/month within Free Tier)
+  - Validate migration process and cloud deployment patterns
+
+- **Phase 3+ (Q3 2026+)**: Strategic GCP adoption
+  - Deploy mature services to GCP staging/production
+  - Local development remains primary workflow
+  - Cloud costs scale with service readiness and revenue
+
+**Rationale for Phased Approach**:
+- **Cost Optimization**: Save $900-1,200 during Phase 0-2 vs immediate cloud development
+- **Architecture Validation**: Prove patterns locally before cloud costs
+- **Hardware Leverage**: Monsoon workstation (64GB RAM, 4c/8t) exceeds typical cloud dev VMs
+- **Cloud Readiness**: Containers and 12-factor principles ensure smooth migration when appropriate
+
+**GCP remains pilot platform choice**, but timeline adjusted to optimize costs during early development while maintaining eventual cloud deployment capability.
+
 ## Revision History
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2025-11-26 | Initial draft and acceptance | Tony Moores |
+| 2025-12-14 | Added local-first timeline context (ADR-0008) | Tony Moores |
