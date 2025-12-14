@@ -88,6 +88,30 @@
 **Denial of Service**: Rate limiting prevents abuse  
 **Elevation of Privilege**: RBAC prevents unauthorized access
 
+## Error Handling Security
+
+**Standard**: [ERROR-HANDLING-STANDARDS.md](../../standards/ERROR-HANDLING-STANDARDS.md)
+
+### Sensitive Data Protection
+
+- **No sensitive data in error responses**: Stack traces, database details, internal IDs excluded in production
+- **Generic error messages for system errors**: "An unexpected error occurred. Contact support with request ID: req-abc-123"
+- **Detailed validation errors only**: Field-level errors included for client corrections
+- **Cross-tenant leak prevention**: Resources in another tenant return 404 (not 403)
+
+### Error Rate Limiting
+
+- **Authentication failures**: Max 5 attempts per IP/15 minutes (429 Too Many Requests)
+- **API errors**: Counted toward tier rate limits (no separate error allowance)
+- **Error-based enumeration prevention**: Timing attacks mitigated (constant-time responses)
+
+### Error Correlation
+
+- **request_id in all error responses**: Enables support debugging without exposing internals
+- **tenant_id in authenticated errors**: Enables tenant-scoped debugging
+- **trace_id in distributed errors**: Correlates errors across services
+- **Structured error logging**: All errors logged with full context (request_id, tenant_id, user_id, trace_id)
+
 ## Compliance
 
 - **GDPR**: Right to erasure (soft delete + anonymization)

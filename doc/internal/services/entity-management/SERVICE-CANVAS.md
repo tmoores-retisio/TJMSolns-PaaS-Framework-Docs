@@ -496,6 +496,49 @@ Feature: User Invitation
 
 ---
 
+## Error Handling
+
+**Standard**: [ERROR-HANDLING-STANDARDS.md](../../technical/standards/ERROR-HANDLING-STANDARDS.md)
+
+All endpoints return RFC 7807 Problem Details format with multi-tenant context:
+
+**Validation Error** (400):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/validation-error",
+  "title": "Validation Error",
+  "status": 400,
+  "detail": "Organization name cannot be empty",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000",
+  "request_id": "req-abc-123",
+  "errors": [{"field": "name", "message": "Name is required", "code": "REQUIRED"}]
+}
+```
+
+**Authorization Error** (403):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/forbidden",
+  "title": "Forbidden",
+  "status": 403,
+  "detail": "User user-123 does not have permission to create organizations",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000",
+  "request_id": "req-abc-123"
+}
+```
+
+**Actor Failure Handling**:
+- Transient errors (database timeout): Actor restart with exponential backoff
+- Business errors (validation): Actor response with error message, no restart
+- Critical errors: Escalate to supervisor, logged at ERROR level
+
+**Circuit Breaker** (503):
+- Circuit opens after 5 consecutive downstream failures
+- Returns 503 with `retry_after` guidance (30 seconds)
+- Protects downstream services from cascade failures
+
+---
+
 ## Future Considerations
 
 - **Custom Role Builder**: Allow tenants to define custom roles beyond predefined set
@@ -511,4 +554,5 @@ Feature: User Invitation
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2025-12-14 | Added error handling standards reference | Platform Team |
 | 2025-11-29 | Initial canvas | Platform Team |

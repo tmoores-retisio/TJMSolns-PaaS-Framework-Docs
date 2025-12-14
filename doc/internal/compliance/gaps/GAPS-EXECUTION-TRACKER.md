@@ -248,6 +248,44 @@ All paths updated from `../../best-practices/` → `../../technical/best-practic
 
 **UPDATE** (Dec 14, 2025): Gap 4 (Governance Alignment) completed early in Week 1 along with Gaps 1-2. All P0 and P1 gaps now resolved.
 
+**BONUS STANDARD** (Dec 14, 2025): Error Handling Standards ✅ **COMPLETE**
+
+Gap 5 was not originally identified, but has been completed proactively to establish comprehensive error handling patterns before implementation:
+
+**Error Handling Standards Created**:
+- [x] Created ERROR-HANDLING-STANDARDS.md (~3,700 lines)
+- [x] Documented RFC 7807 Problem Details format
+- [x] Documented error taxonomy (system 5xx vs business 4xx)
+- [x] Documented HTTP status code mapping
+- [x] Documented multi-tenant error handling (tenant_id, cross-tenant leak prevention)
+- [x] Documented actor error handling (supervision strategies by error type)
+- [x] Documented circuit breaker error responses (503 with retry guidance)
+- [x] Documented error logging standards (structured logging, MDC context)
+- [x] Documented error metrics and observability (Prometheus metrics, alerts)
+- [x] Documented error translation patterns (domain errors → HTTP responses)
+- [x] Documented security considerations (no sensitive data, rate limiting, timing attacks)
+- [x] Provided complete Scala/Akka HTTP implementation patterns
+- [x] Updated EMS SERVICE-CANVAS.md with error handling section
+- [x] Updated EMS API-SPECIFICATION.md with error response examples
+- [x] Updated EMS SECURITY-REQUIREMENTS.md with error handling security
+- [x] Updated PDR-0006 Service Canvas template (added Error Handling section 11)
+
+**Key Design Decisions**:
+- **Format**: RFC 7807 Problem Details (industry standard)
+- **Error Categories**: System errors (5xx, retryable) vs Business errors (4xx, not retryable)
+- **Multi-Tenant**: Always include tenant_id, prevent cross-tenant information leakage (404 instead of 403)
+- **Actor Supervision**: Restart (transient), Stop (unrecoverable), Resume (business), Escalate (critical)
+- **Circuit Breaker**: 503 with retry_after guidance, protects downstream services
+- **Logging**: Structured with MDC (request_id, tenant_id, user_id, trace_id)
+- **Metrics**: Error rates, circuit breaker state, actor restarts (Prometheus)
+- **Security**: No sensitive data in errors, rate limiting on auth failures, constant-time responses
+
+**Success Criteria for Error Handling Standards**: ✅ ALL COMPLETE
+- [x] Comprehensive error handling standard created
+- [x] Entity Management Service documentation updated
+- [x] Service Canvas template updated
+- [x] All patterns documented with Scala code examples
+
 #### Day 11 (Dec 30) - P2 Enhancements
 
 **Morning: Gap 4 - Standards Governance Alignment**:

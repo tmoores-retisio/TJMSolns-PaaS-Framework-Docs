@@ -261,10 +261,11 @@ docs/runbooks/ (detailed operational procedures)
 8. Documentation (service docs, governance refs)
 9. Release History
 10. **Security** (auth/authz per [SECURITY-JWT-PERMISSIONS.md](../../technical/standards/SECURITY-JWT-PERMISSIONS.md), data protection, scanning, compliance)
-11. Testing (coverage, types, frameworks)
-12. Disaster Recovery (backup, RTO/RPO, failure scenarios)
-13. Future Considerations
-14. Canvas Changelog
+11. **Error Handling** (RFC 7807 format per [ERROR-HANDLING-STANDARDS.md](../../technical/standards/ERROR-HANDLING-STANDARDS.md), actor supervision, circuit breakers)
+12. Testing (coverage, types, frameworks)
+13. Disaster Recovery (backup, RTO/RPO, failure scenarios)
+14. Future Considerations
+15. Canvas Changelog
 
 **Format**: Markdown with tables for scanability
 

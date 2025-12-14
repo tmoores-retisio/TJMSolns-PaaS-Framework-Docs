@@ -49,6 +49,143 @@ X-Tenant-ID: 550e8400-e29b-41d4-a716-446655440000
 
 ---
 
+## Error Handling
+
+**Standard**: [ERROR-HANDLING-STANDARDS.md](../../technical/standards/ERROR-HANDLING-STANDARDS.md)
+
+All error responses follow RFC 7807 Problem Details format:
+
+### Common Error Responses
+
+**Validation Error** (400 Bad Request):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/validation-error",
+  "title": "Validation Error",
+  "status": 400,
+  "detail": "Invalid organization name format",
+  "instance": "/api/v1/tenants/550e8400-e29b-41d4-a716-446655440000/organizations",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000",
+  "errors": [
+    {"field": "name", "message": "Name cannot be empty", "code": "REQUIRED"}
+  ]
+}
+```
+
+**Authentication Required** (401 Unauthorized):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/authentication-required",
+  "title": "Authentication Required",
+  "status": 401,
+  "detail": "JWT token is missing or invalid",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123"
+}
+```
+
+**Authorization Failed** (403 Forbidden):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/forbidden",
+  "title": "Forbidden",
+  "status": 403,
+  "detail": "User user-123 does not have permission entity-management:write:tenant",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": "user-123"
+}
+```
+
+**Resource Not Found** (404 Not Found):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/organization-not-found",
+  "title": "Organization Not Found",
+  "status": 404,
+  "detail": "Organization 650e8400-e29b-41d4-a716-446655440000 not found",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+**Conflict** (409 Conflict):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/duplicate-organization",
+  "title": "Duplicate Organization",
+  "status": 409,
+  "detail": "Organization with name 'Engineering' already exists",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+**Rate Limit Exceeded** (429 Too Many Requests):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/rate-limit",
+  "title": "Too Many Requests",
+  "status": 429,
+  "detail": "Rate limit exceeded for tier: silver (1000 req/hour)",
+  "retry_after": 3600,
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+**Internal Server Error** (500 Internal Server Error):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/internal-error",
+  "title": "Internal Server Error",
+  "status": 500,
+  "detail": "An unexpected error occurred. Please contact support with request ID: req-abc-123",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+**Service Unavailable** (503 Service Unavailable):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/circuit-open",
+  "title": "Service Temporarily Unavailable",
+  "status": 503,
+  "detail": "Downstream service is experiencing issues. Circuit breaker is open.",
+  "retry_after": 30,
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+### Multi-Tenant Error Handling
+
+**Tenant Mismatch** (403 Forbidden):
+```json
+{
+  "type": "https://api.tjmpaas.com/errors/tenant-mismatch",
+  "title": "Tenant Mismatch",
+  "status": 403,
+  "detail": "X-Tenant-ID header does not match authenticated tenant",
+  "timestamp": "2025-12-14T10:30:00Z",
+  "request_id": "req-abc-123",
+  "tenant_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+**Cross-Tenant Leak Prevention**: Resources belonging to another tenant return 404 (not 403) to prevent information leakage.
+
+---
+
 ## Tenant Management
 
 ### Create Tenant
