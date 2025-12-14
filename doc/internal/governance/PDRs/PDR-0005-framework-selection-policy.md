@@ -236,7 +236,7 @@ When category reaches 3, new choices require explicit decision and possibly reti
 2. **Akka Typed 2.6.x**: Last Apache 2.0 version, mature, proven ecosystem
 3. **ZIO Actors**: Tight ZIO integration, functional style
 
-*See [Actor Patterns Best Practices](../../best-practices/architecture/actor-patterns.md) for detailed framework comparison. Industry evidence: PayPal achieves 99.999% uptime with actors; LinkedIn runs 15K+ actors handling 100M+ req/day. Pekko recommended over Akka 2.7+ (BSL license) for licensing freedom.*
+*See [Actor Patterns Best Practices](../../technical/best-practices/architecture/actor-patterns.md) for detailed framework comparison. Industry evidence: PayPal achieves 99.999% uptime with actors; LinkedIn runs 15K+ actors handling 100M+ req/day. Pekko recommended over Akka 2.7+ (BSL license) for licensing freedom.*
 
 **Effect Systems** (max 3):
 1. **ZIO**: Comprehensive effect system, batteries included

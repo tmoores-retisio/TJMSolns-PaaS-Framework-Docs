@@ -629,7 +629,8 @@ Metrics:
 - [ADR-0005: Reactive Manifesto Alignment](./ADR-0005-reactive-manifesto-alignment.md) - CQRS/ES enables message-driven architecture
 - [ADR-0006: Agent-Based Service Patterns](./ADR-0006-agent-patterns.md) - Actors are natural command handlers and aggregates
 - [ADR-0004: Scala 3 Technology Stack](./ADR-0004-scala3-technology-stack.md) - Scala 3 excellent for CQRS/ES implementation
-- [PDR-0005: Framework Selection Policy](./PDR-0005-framework-selection-policy.md) - Guidelines for choosing CQRS/ES frameworks
+- [PDR-0005: Framework Selection Policy](../PDRs/PDR-0005-framework-selection-policy.md) - Guidelines for choosing CQRS/ES frameworks
+- [SECURITY-JWT-PERMISSIONS.md](../../technical/standards/SECURITY-JWT-PERMISSIONS.md) - JWT authentication for CQRS commands/queries
 - Future ADR: Event schema evolution strategy
 - Future ADR: Saga pattern for distributed transactions
 
@@ -637,9 +638,9 @@ Metrics:
 
 This decision is validated by comprehensive industry research:
 
-- **[CQRS Patterns Best Practices](../../best-practices/architecture/cqrs-patterns.md)**: ING Bank achieved 60% infrastructure cost reduction with CQRS; eBay handles 1B+ products with sub-10ms query latency; Capital One reduced query latency by 70% through CQRS. Industry evidence shows 10-100x read throughput improvement and independent scaling of read/write workloads. Maturity model guidance: Level 2-3 recommended for TJMPaaS cart, orders, and product catalog services.
+- **[CQRS Patterns Best Practices](../../technical/best-practices/architecture/cqrs-patterns.md)**: ING Bank achieved 60% infrastructure cost reduction with CQRS; eBay handles 1B+ products with sub-10ms query latency; Capital One reduced query latency by 70% through CQRS. Industry evidence shows 10-100x read throughput improvement and independent scaling of read/write workloads. Maturity model guidance: Level 2-3 recommended for TJMPaaS cart, orders, and product catalog services.
 
-- **[Event-Driven Architecture Best Practices](../../best-practices/architecture/event-driven.md)**: Netflix processes 1 trillion events/day achieving 50-60% cost reduction; Uber handles 100B+ events/day with Kafka; Shopify processes 1M+ events/second during peak sales. Event-driven integration enables service decoupling, 10-100x better scaling, and resilience through async boundaries. Kafka recommended for high-throughput event streaming with saga patterns for distributed transactions.
+- **[Event-Driven Architecture Best Practices](../../technical/best-practices/architecture/event-driven.md)**: Netflix processes 1 trillion events/day achieving 50-60% cost reduction; Uber handles 100B+ events/day with Kafka; Shopify processes 1M+ events/second during peak sales. Event-driven integration enables service decoupling, 10-100x better scaling, and resilience through async boundaries. Kafka recommended for high-throughput event streaming with saga patterns for distributed transactions.
 
 **Key Validation**: CQRS enables 60% infrastructure cost reduction (ING Bank) and 10-100x read throughput improvements. Event-driven architecture delivers 50-70% cost efficiency at trillion-event-per-day scale (Netflix, Uber). Combined patterns critical for scalable e-commerce systems.
 
@@ -781,7 +782,7 @@ Start simple:
 
 **CQRS Maturity Model**:
 
-See [CQRS Patterns Best Practices](../../best-practices/architecture/cqrs-patterns.md) for detailed maturity model:
+See [CQRS Patterns Best Practices](../../technical/best-practices/architecture/cqrs-patterns.md) for detailed maturity model:
 
 - **Level 1 - Simple CQRS**: Separate methods, same database, same model
   - Use for: Low complexity, learning CQRS concepts

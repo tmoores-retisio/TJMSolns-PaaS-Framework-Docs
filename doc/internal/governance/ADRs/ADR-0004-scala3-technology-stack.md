@@ -377,6 +377,7 @@ Metrics:
 - ADR-0006: Agent-Based Service Patterns (FP fits agent patterns)
 - ADR-0007: CQRS and Event-Driven Architecture (Scala 3 excellent for CQRS/ES)
 - PDR-0005: Framework Selection Policy (guidelines for library choices)
+- [SECURITY-JWT-PERMISSIONS.md](../../technical/standards/SECURITY-JWT-PERMISSIONS.md) - Complete Scala/Akka HTTP JWT implementations
 - Future ADR: Effect system selection (ZIO vs Cats Effect)
 - Future ADR: HTTP framework selection
 
@@ -384,11 +385,11 @@ Metrics:
 
 This decision is validated by comprehensive industry research:
 
-- **[Functional Programming Best Practices](../../best-practices/architecture/functional-programming.md)**: Facebook study shows 57% fewer defects with FP; Jane Street successfully uses FP for $100B+ daily trading volume; Zalando reports better maintainability and team productivity.
+- **[Functional Programming Best Practices](../../technical/best-practices/architecture/functional-programming.md)**: Facebook study shows 57% fewer defects with FP; Jane Street successfully uses FP for $100B+ daily trading volume; Zalando reports better maintainability and team productivity.
 
-- **[Scala 3 Best Practices](../../best-practices/development/scala3.md)**: LinkedIn and Spotify have successfully adopted Scala 3 in production; 2-3x faster compilation than Scala 2.13; modern features (enums, opaque types, union types) significantly improve developer experience; excellent fit for domain modeling in commerce applications.
+- **[Scala 3 Best Practices](../../technical/best-practices/development/scala3.md)**: LinkedIn and Spotify have successfully adopted Scala 3 in production; 2-3x faster compilation than Scala 2.13; modern features (enums, opaque types, union types) significantly improve developer experience; excellent fit for domain modeling in commerce applications.
 
-- **[Mill Build Tool Best Practices](../../best-practices/development/mill-build-tool.md)**: VirtusLab reports 40% faster builds and 30% configuration reduction vs SBT; 2-3x faster incremental builds; Discord and Databricks use Mill successfully at scale; 10x simpler build configuration.
+- **[Mill Build Tool Best Practices](../../technical/best-practices/development/mill-build-tool.md)**: VirtusLab reports 40% faster builds and 30% configuration reduction vs SBT; 2-3x faster incremental builds; Discord and Databricks use Mill successfully at scale; 10x simpler build configuration.
 
 **Key Validation**: All three pillars of this technology stack decision (Scala 3, Functional Programming, Mill) are validated by industry evidence showing 2-3x compilation speed improvements, 40-60% fewer defects, and significant maintainability gains in production environments at scale.
 

@@ -260,7 +260,7 @@ docs/runbooks/ (detailed operational procedures)
 7. Operations (deployment, env vars, secrets, runbooks)
 8. Documentation (service docs, governance refs)
 9. Release History
-10. Security (auth, data protection, scanning, compliance)
+10. **Security** (auth/authz per [SECURITY-JWT-PERMISSIONS.md](../../technical/standards/SECURITY-JWT-PERMISSIONS.md), data protection, scanning, compliance)
 11. Testing (coverage, types, frameworks)
 12. Disaster Recovery (backup, RTO/RPO, failure scenarios)
 13. Future Considerations

@@ -658,6 +658,7 @@ Metrics:
 - [ADR-0003: Containerization Strategy](./ADR-0003-containerization-strategy.md) - Actors containerize well
 - [ADR-0007: CQRS and Event-Driven Architecture](./ADR-0007-cqrs-event-driven-architecture.md) - Actors as event-sourced aggregates
 - [PDR-0005: Framework Selection Policy](../PDRs/PDR-0005-framework-selection-policy.md) - Guidelines for choosing actor frameworks
+- [SECURITY-JWT-PERMISSIONS.md](../../technical/standards/SECURITY-JWT-PERMISSIONS.md) - JWT validation in actor-based services
 - Future ADR: Event sourcing with actors
 - Future ADR: CQRS patterns with actors
 - Future ADR: Akka/Pekko Cluster vs single-node actors
@@ -666,7 +667,7 @@ Metrics:
 
 This decision is validated by comprehensive industry research:
 
-- **[Actor Patterns and Frameworks Best Practices](../../best-practices/architecture/actor-patterns.md)**: LinkedIn runs 15,000+ Akka actors handling 100M+ requests/day with 99.99% uptime; PayPal achieves 99.999% uptime with actor-based architecture processing billions of transactions annually; ING Bank rebuilt core banking on actors achieving 10x throughput improvement. Research shows actors deliver 50M+ messages/second throughput, near-linear scaling, and concurrency safety without locks.
+- **[Actor Patterns and Frameworks Best Practices](../../technical/best-practices/architecture/actor-patterns.md)**: LinkedIn runs 15,000+ Akka actors handling 100M+ requests/day with 99.99% uptime; PayPal achieves 99.999% uptime with actor-based architecture processing billions of transactions annually; ING Bank rebuilt core banking on actors achieving 10x throughput improvement. Research shows actors deliver 50M+ messages/second throughput, near-linear scaling, and concurrency safety without locks.
 
 **Framework Comparison**: Industry evidence strongly supports **Pekko (Apache 2.0)** as recommended choice for new TJMPaaS services over Akka 2.7+ (Business Source License). Pekko maintains full Akka compatibility while preserving open-source licensing. Akka Typed 2.6.x (last Apache 2.0 version) remains acceptable for teams already invested. ZIO Actors provides lightweight alternative for ZIO-first architectures.
 

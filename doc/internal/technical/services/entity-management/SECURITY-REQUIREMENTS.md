@@ -2,23 +2,39 @@
 
 **Status**: Active  
 **Version**: 1.0.0  
-**Last Updated**: 2025-11-29  
-**Template**: [SECURITY-REQUIREMENTS.md](../../governance/templates/SECURITY-REQUIREMENTS.md)
+**Last Updated**: 2025-12-14  
+**Template**: [SECURITY-REQUIREMENTS.md](../../governance/templates/SECURITY-REQUIREMENTS.md)  
+**Security Standard**: [SECURITY-JWT-PERMISSIONS.md](../../standards/SECURITY-JWT-PERMISSIONS.md)
 
 ---
 
 ## Authentication
 
-- JWT (RS256) on all endpoints
-- Token includes tenant_id claim (validated against X-Tenant-ID header)
-- Token expiry: 1 hour (access), 30 days (refresh)
-- Public key cached for signature validation
+**Implements**: [SECURITY-JWT-PERMISSIONS.md](../../standards/SECURITY-JWT-PERMISSIONS.md) standard
+
+- JWT (RS256) on all endpoints per SECURITY-JWT-PERMISSIONS standard
+- Token includes tenant_id claim (validated against X-Tenant-ID header - mandatory)
+- Token expiry: 1 hour (access), 30 days (refresh with rotation)
+- Token validation: RS256 signature verification + claim checks
+- Public keys fetched from JWKS endpoint (`/.well-known/jwks.json`)
+- Public key cached for 1 hour
+- Token revocation via token_version claim (incremented on security events)
+- Refresh token blacklist in Redis for immediate revocation
 
 ## Authorization
 
-- RBAC model with 4 roles: tenant-owner, tenant-admin, org-admin, team-member
-- Permissions format: `entity-management:action:scope`
-- Permission evaluation cached (5-minute TTL)
+**Implements**: Permission model from [SECURITY-JWT-PERMISSIONS.md](../../standards/SECURITY-JWT-PERMISSIONS.md)
+
+- RBAC model with 4 built-in roles: tenant-owner, tenant-admin, org-admin, team-member
+- Custom roles supported (1,000+ per tenant)
+- **Permissions format**: `service:action:scope` per SECURITY-JWT-PERMISSIONS standard
+  - Service: `entity-management`
+  - Actions: `read`, `write`, `delete`, `approve`, `admin`, `*` (wildcard)
+  - Scopes: `*` (all), `own` (user-owned), `organization`, `{resource_type}`
+- **Permission hierarchy**: Negative permissions (`!`) override positive, wildcard matching supported
+- **Permission evaluation**: Cached 5-minute TTL for <1ms checks
+- **Permission enforcement**: Akka HTTP directives (`requirePermission`, `requireRole`)
+- **Cache invalidation**: Event-driven updates when roles/permissions change
 
 ## Multi-Tenant Isolation
 

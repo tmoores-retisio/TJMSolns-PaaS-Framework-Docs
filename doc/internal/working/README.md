@@ -45,7 +45,7 @@
 
 - **Governance**: `doc/internal/governance/`
 - **Architecture**: `doc/internal/architecture/`
-- **Best Practices**: `doc/internal/best-practices/`
+- **Best Practices**: `doc/internal/technical/best-practices/`
 - **Templates**: `doc/internal/templates/`
 - **Examples**: `doc/internal/examples/`
 - **Legacy**: `doc/internal/archive/legacy/`

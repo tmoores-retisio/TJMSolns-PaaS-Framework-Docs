@@ -308,9 +308,9 @@ Metrics:
 
 This decision is validated by comprehensive industry research:
 
-- **[Reactive Manifesto Best Practices](../../best-practices/architecture/reactive-manifesto.md)**: Netflix achieves 2B+ API requests/day with reactive patterns; Walmart reports 40% cost reduction and 50% improved latency; LinkedIn scales to 100M+ requests/day with 99.99% uptime. Industry evidence shows 10-100x throughput improvements, 50%+ latency reductions, and 40-60% cost efficiencies. Reactive patterns critical for e-commerce peak load handling.
+- **[Reactive Manifesto Best Practices](../../technical/best-practices/architecture/reactive-manifesto.md)**: Netflix achieves 2B+ API requests/day with reactive patterns; Walmart reports 40% cost reduction and 50% improved latency; LinkedIn scales to 100M+ requests/day with 99.99% uptime. Industry evidence shows 10-100x throughput improvements, 50%+ latency reductions, and 40-60% cost efficiencies. Reactive patterns critical for e-commerce peak load handling.
 
-- **[Event-Driven Architecture Best Practices](../../best-practices/architecture/event-driven.md)**: Netflix processes 1 trillion events/day achieving 50-60% cost reduction; Uber handles 100B+ events/day with Kafka; Shopify processes 1M+ events/second during peak sales. Event-driven integration enables service decoupling, 10-100x better scaling, and resilience through async boundaries.
+- **[Event-Driven Architecture Best Practices](../../technical/best-practices/architecture/event-driven.md)**: Netflix processes 1 trillion events/day achieving 50-60% cost reduction; Uber handles 100B+ events/day with Kafka; Shopify processes 1M+ events/second during peak sales. Event-driven integration enables service decoupling, 10-100x better scaling, and resilience through async boundaries.
 
 **Key Validation**: Reactive Manifesto principles enable 10-100x throughput improvements and 40-60% cost reductions in production at scale. Event-driven patterns complement reactive principles for service integration.
 
